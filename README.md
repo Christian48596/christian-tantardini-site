@@ -4,7 +4,7 @@ Private development repository for Christian Tantardini's personal academic webs
 
 ## Project status
 
-The website is being prepared as a private preview. Publication and permanent-domain configuration will be completed only after content review and handover.
+The first private preview is implemented. Publication and permanent-domain configuration will be completed only after content review and handover.
 
 ## Planned sections
 
@@ -14,6 +14,30 @@ The website is being prepared as a private preview. Publication and permanent-do
 - Academic activities
 - Curriculum vitae
 - Contact and scholarly profiles
+
+## Local preview
+
+From the repository root:
+
+```powershell
+python -m http.server 8765
+```
+
+Then open `http://127.0.0.1:8765/`.
+
+## Structure
+
+- `index.html` — profile and selected work
+- `publications.html` — curated, filterable publication record
+- `projects.html` — research themes and related outputs
+- `activities.html` — academic trajectory
+- `cv.html` — concise web CV
+- `contact.html` — verified scholarly profiles
+- `assets/` — original visual system, scripts and SVG artwork
+
+## Content policy
+
+The preview uses public institutional records, DOI metadata and scholarly identifiers. Direct contact details, portrait, downloadable CV and final first-person wording remain pending the owner's approval.
 
 ## Reference
 
