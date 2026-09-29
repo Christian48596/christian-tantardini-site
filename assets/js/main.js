@@ -20,19 +20,84 @@ document.querySelectorAll('[data-current-year]').forEach((node) => {
   node.textContent = new Date().getFullYear();
 });
 
-const publicationFilters = document.querySelectorAll('[data-publication-filter]');
-const publicationItems = document.querySelectorAll('[data-publication-year]');
+const publicationList = document.querySelector('[data-publication-list]');
+const publicationFilterBar = document.querySelector('[data-publication-filters]');
+const publicationSearch = document.querySelector('[data-publication-search]');
+const publicationCount = document.querySelector('[data-publication-count]');
+const publicationEmpty = document.querySelector('[data-publication-empty]');
+let activePublicationYear = 'all';
 
-publicationFilters.forEach((button) => {
-  button.addEventListener('click', () => {
-    const filter = button.dataset.publicationFilter;
-    publicationFilters.forEach((item) => item.classList.remove('is-active'));
-    button.classList.add('is-active');
+if (publicationList && Array.isArray(window.publications)) {
+  const years = [...new Set(window.publications.map(([year]) => String(year)))];
+  const filterOptions = [['all', 'All years'], ...years.map((year) => [year, year])];
+
+  filterOptions.forEach(([value, label], index) => {
+    const button = document.createElement('button');
+    button.className = `filter-button${index === 0 ? ' is-active' : ''}`;
+    button.type = 'button';
+    button.dataset.publicationFilter = value;
+    button.textContent = label;
+    publicationFilterBar?.append(button);
+  });
+
+  window.publications.forEach(([year, title, journal, doi, type]) => {
+    const article = document.createElement('article');
+    article.className = `publication${type === 'correction' ? ' publication-correction' : ''}`;
+    article.dataset.publicationYear = String(year);
+
+    const yearLabel = document.createElement('span');
+    yearLabel.className = 'publication-year';
+    yearLabel.textContent = String(year);
+
+    const details = document.createElement('div');
+    const heading = document.createElement('h3');
+    heading.textContent = title;
+    const meta = document.createElement('div');
+    meta.className = 'publication-meta';
+    if (type === 'correction') {
+      const badge = document.createElement('span');
+      badge.className = 'publication-badge';
+      badge.textContent = 'Correction';
+      meta.append(badge);
+    }
+    meta.append(document.createTextNode(journal));
+    details.append(heading, meta);
+
+    const link = document.createElement('a');
+    link.className = 'publication-link';
+    link.href = `https://doi.org/${doi}`;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.textContent = 'DOI';
+    article.append(yearLabel, details, link);
+    publicationList.append(article);
+  });
+
+  const publicationItems = publicationList.querySelectorAll('[data-publication-year]');
+  const updatePublications = () => {
+    const query = publicationSearch?.value.trim().toLocaleLowerCase() ?? '';
+    let visibleCount = 0;
     publicationItems.forEach((item) => {
-      item.hidden = filter !== 'all' && item.dataset.publicationYear !== filter;
+      const matchesYear = activePublicationYear === 'all' || item.dataset.publicationYear === activePublicationYear;
+      const matchesQuery = !query || item.textContent.toLocaleLowerCase().includes(query);
+      const isVisible = matchesYear && matchesQuery;
+      item.hidden = !isVisible;
+      if (isVisible) visibleCount += 1;
+    });
+    if (publicationCount) publicationCount.textContent = String(visibleCount);
+    if (publicationEmpty) publicationEmpty.hidden = visibleCount !== 0;
+  };
+
+  publicationFilterBar?.querySelectorAll('[data-publication-filter]').forEach((button) => {
+    button.addEventListener('click', () => {
+      activePublicationYear = button.dataset.publicationFilter;
+      publicationFilterBar.querySelectorAll('[data-publication-filter]').forEach((item) => item.classList.remove('is-active'));
+      button.classList.add('is-active');
+      updatePublications();
     });
   });
-});
+  publicationSearch?.addEventListener('input', updatePublications);
+}
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
