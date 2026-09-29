@@ -37,6 +37,7 @@ if (publicationList && Array.isArray(window.publications)) {
     button.type = 'button';
     button.dataset.publicationFilter = value;
     button.textContent = label;
+    button.setAttribute('aria-pressed', String(index === 0));
     publicationFilterBar?.append(button);
   });
 
@@ -44,6 +45,7 @@ if (publicationList && Array.isArray(window.publications)) {
     const article = document.createElement('article');
     article.className = `publication${type === 'correction' ? ' publication-correction' : ''}`;
     article.dataset.publicationYear = String(year);
+    article.dataset.publicationTitle = title.toLocaleLowerCase();
 
     const yearLabel = document.createElement('span');
     yearLabel.className = 'publication-year';
@@ -54,12 +56,6 @@ if (publicationList && Array.isArray(window.publications)) {
     heading.textContent = title;
     const meta = document.createElement('div');
     meta.className = 'publication-meta';
-    if (type === 'correction') {
-      const badge = document.createElement('span');
-      badge.className = 'publication-badge';
-      badge.textContent = 'Correction';
-      meta.append(badge);
-    }
     meta.append(document.createTextNode(journal));
     details.append(heading, meta);
 
@@ -79,7 +75,7 @@ if (publicationList && Array.isArray(window.publications)) {
     let visibleCount = 0;
     publicationItems.forEach((item) => {
       const matchesYear = activePublicationYear === 'all' || item.dataset.publicationYear === activePublicationYear;
-      const matchesQuery = !query || item.textContent.toLocaleLowerCase().includes(query);
+      const matchesQuery = !query || item.dataset.publicationTitle.includes(query);
       const isVisible = matchesYear && matchesQuery;
       item.hidden = !isVisible;
       if (isVisible) visibleCount += 1;
@@ -91,12 +87,24 @@ if (publicationList && Array.isArray(window.publications)) {
   publicationFilterBar?.querySelectorAll('[data-publication-filter]').forEach((button) => {
     button.addEventListener('click', () => {
       activePublicationYear = button.dataset.publicationFilter;
-      publicationFilterBar.querySelectorAll('[data-publication-filter]').forEach((item) => item.classList.remove('is-active'));
-      button.classList.add('is-active');
+      if (publicationSearch) publicationSearch.value = '';
+      publicationFilterBar.querySelectorAll('[data-publication-filter]').forEach((item) => {
+        const isActive = item === button;
+        item.classList.toggle('is-active', isActive);
+        item.setAttribute('aria-pressed', String(isActive));
+      });
       updatePublications();
     });
   });
-  publicationSearch?.addEventListener('input', updatePublications);
+  publicationSearch?.addEventListener('input', () => {
+    activePublicationYear = 'all';
+    publicationFilterBar?.querySelectorAll('[data-publication-filter]').forEach((item) => {
+      const isActive = item.dataset.publicationFilter === 'all';
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-pressed', String(isActive));
+    });
+    updatePublications();
+  });
 }
 
 const observer = new IntersectionObserver((entries) => {
