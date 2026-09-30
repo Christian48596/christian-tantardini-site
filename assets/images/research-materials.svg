@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="t d">
+  <title id="t">Low-dimensional crystal under pressure</title><desc id="d">Layered atomic lattice compressed between two planes.</desc>
+  <rect width="640" height="360" fill="#102c24"/><g stroke="#9fc7a9" fill="none" opacity=".62"><path d="M95 120l225-65 225 65-225 65zM95 240l225-65 225 65-225 65z"/><path d="M95 120v120m90-146v120m90-146v120m90-146v120m90-146v120m90-94v120"/></g>
+  <g fill="#dcebdd"><circle cx="95" cy="180" r="9"/><circle cx="185" cy="154" r="9"/><circle cx="275" cy="128" r="9"/><circle cx="365" cy="154" r="9"/><circle cx="455" cy="180" r="9"/><circle cx="545" cy="154" r="9"/></g><path d="M320 18v58m-12-14 12 14 12-14M320 342v-58m-12 14 12-14 12 14" stroke="#b9b778" stroke-width="3" fill="none"/>
+</svg>

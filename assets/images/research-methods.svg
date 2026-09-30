@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="t d">
+  <title id="t">Multiresolution computation</title><desc id="d">A function resolved through nested numerical grids.</desc>
+  <rect width="640" height="360" fill="#102c24"/><g fill="none"><path d="M55 255c65 0 70-155 138-155s72 155 142 155 73-155 145-155 65 155 105 155" stroke="#dcebdd" stroke-width="4"/><g stroke="#9fc7a9" opacity=".45"><path d="M55 70v220M115 70v220M175 70v220M235 70v220M295 70v220M355 70v220M415 70v220M475 70v220M535 70v220M595 70v220"/><path d="M55 100h540M55 155h540M55 210h540M55 265h540"/></g><rect x="350" y="85" width="130" height="130" stroke="#b9b778" stroke-width="3"/><rect x="388" y="123" width="54" height="54" stroke="#b9b778"/></g>
+</svg>

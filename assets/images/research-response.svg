@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="t d">
+  <title id="t">Excited-state response spectrum</title><desc id="d">A light pulse excites a material and produces a response spectrum.</desc>
+  <rect width="640" height="360" fill="#102c24"/><path d="M45 180h170" stroke="#b9b778" stroke-width="3"/><path d="m190 166 25 14-25 14" fill="#b9b778"/><g fill="none" stroke="#dcebdd"><circle cx="285" cy="180" r="66"/><ellipse cx="285" cy="180" rx="66" ry="24"/><path d="M285 114v132"/></g><circle cx="309" cy="136" r="8" fill="#b9b778"/><path d="M390 280V85m0 195h210" stroke="#9fc7a9"/><path d="M405 255c35-4 42-12 55-65 13-54 22-71 36-9 13 58 25 67 39 12 14-57 25-41 50 62" fill="none" stroke="#dcebdd" stroke-width="4"/>
+</svg>

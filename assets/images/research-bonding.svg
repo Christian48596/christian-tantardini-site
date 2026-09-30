@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="t d">
+  <title id="t">Electron-density topology</title><desc id="d">Abstract contour map with connected atomic centres.</desc>
+  <rect width="640" height="360" fill="#102c24"/><g fill="none" stroke="#9fc7a9" opacity=".55">
+  <ellipse cx="205" cy="180" rx="150" ry="105"/><ellipse cx="205" cy="180" rx="105" ry="70"/><ellipse cx="435" cy="180" rx="150" ry="105"/><ellipse cx="435" cy="180" rx="105" ry="70"/>
+  <path d="M70 70c105 45 145 51 250 110S506 251 570 290M70 290c105-45 145-51 250-110S506 109 570 70" stroke="#b9b778"/>
+  </g><g fill="#dcebdd"><circle cx="205" cy="180" r="11"/><circle cx="435" cy="180" r="11"/><circle cx="320" cy="180" r="5" fill="#b9b778"/></g>
+</svg>

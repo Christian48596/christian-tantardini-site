@@ -215,6 +215,27 @@ button { font: inherit; }
 .research-card p, .project-card p { color: var(--muted); }
 .tag-list { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
 .tag-list li { padding: .3rem .55rem; border: 1px solid var(--line); color: #bed4cf; font-size: .7rem; letter-spacing: .07em; text-transform: uppercase; }
+.section-paper .tag-list li { border-color: rgba(11,33,27,.22); color: #31574d; }
+
+.research-theme { scroll-margin-top: 82px; }
+.research-theme-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(3rem, 8vw, 8rem); align-items: start; }
+.research-theme .profile-lead { margin: 1.6rem 0 2.2rem; }
+.research-theme img { width: 100%; border: 1px solid var(--line); }
+.section-paper.research-theme img { border-color: rgba(11,33,27,.2); }
+.theme-publications { display: grid; gap: .65rem; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
+.section-paper .theme-publications { border-color: rgba(11,33,27,.2); }
+.theme-publications span { color: var(--olive-accent); font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.section-paper .theme-publications span { color: #777b43; }
+.theme-publications a { width: fit-content; color: var(--mint-bright); border-bottom: 1px solid transparent; font-size: .86rem; font-weight: 700; }
+.theme-publications a:hover { border-color: currentColor; }
+.theme-publications a::after { content: " ↗"; color: var(--olive-accent); }
+.section-paper .theme-publications a { color: #31574d; }
+.career-arc { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid rgba(11,33,27,.2); }
+.career-arc > div { padding: 1.7rem; border-right: 1px solid rgba(11,33,27,.2); }
+.career-arc > div:last-child { border-right: 0; }
+.career-arc span { color: #777b43; font: 800 .7rem monospace; letter-spacing: .1em; }
+.career-arc h3 { min-height: 4.2rem; margin: 1.6rem 0 .8rem; font: 400 1.5rem/1.15 "Palatino Linotype", "Book Antiqua", Georgia, serif; }
+.career-arc p { margin: 0; color: #4f6864; font-size: .85rem; }
 
 .publication-list { display: grid; gap: 0; border-top: 1px solid rgba(7,25,29,.22); }
 .publication {
@@ -232,6 +253,30 @@ button { font: inherit; }
 .publication-link { color: var(--ink); font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
 .publication-link::after { content: " ↗"; color: var(--olive-accent); }
 .publication:hover h3 { color: #527961; }
+
+.selected-publication-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--line); background: var(--line); }
+.selected-publication-card { position: relative; min-height: 360px; padding: 2rem; background: var(--ink-soft); overflow: hidden; }
+.selected-publication-card::after { content: ""; position: absolute; right: -55px; bottom: -55px; width: 130px; height: 130px; border: 1px solid rgba(185,183,120,.35); border-radius: 50%; transition: transform .3s ease; }
+.selected-publication-card:hover::after { transform: scale(1.35); }
+.selected-publication-top, .selected-publication-meta { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font: 700 .7rem/1.4 monospace; letter-spacing: .12em; text-transform: uppercase; }
+.selected-publication-theme { margin: 3.2rem 0 .7rem; color: var(--olive-accent); font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.selected-publication-card h3 { max-width: 34rem; margin: 0 0 1rem; font: 400 clamp(1.45rem, 2.5vw, 2.25rem)/1.12 "Palatino Linotype", "Book Antiqua", Georgia, serif; letter-spacing: -.025em; }
+.selected-publication-note { max-width: 38rem; color: var(--muted); font-size: .9rem; }
+.selected-publication-meta { position: absolute; left: 2rem; right: 2rem; bottom: 2rem; padding-right: 4rem; }
+.card-link { position: absolute; inset: 0; z-index: 1; }
+.card-link:focus-visible { outline: 2px solid var(--olive-accent); outline-offset: -4px; }
+
+.publication-record-heading { margin-bottom: 3rem; }
+.publication-tool-actions { display: flex; align-items: end; gap: 1.2rem; }
+.publication-tool-actions .button { min-height: 44px; white-space: nowrap; }
+.publication-actions { display: flex; flex-direction: column; align-items: flex-start; gap: .55rem; min-width: 8.4rem; }
+.publication-action { padding: .25rem 0; border: 0; border-bottom: 1px solid rgba(237,244,237,.28); color: var(--muted); background: transparent; cursor: pointer; font-size: .68rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; transition: color .18s ease, border-color .18s ease; }
+.publication-action:hover, .publication-action:focus-visible { color: var(--mint-bright); border-color: var(--mint); outline: 0; }
+.publication-action.is-copied { color: var(--olive-accent); border-color: var(--olive-accent); }
+.publication-authors { margin-top: .65rem; color: #49615c; font-size: .78rem; }
+.publication-authors summary { width: max-content; color: #31574d; cursor: pointer; font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.publication-authors summary:hover { color: #527961; }
+.publication-authors p { max-width: 900px; margin: .65rem 0 0; line-height: 1.65; }
 
 .facts { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); }
 .fact { padding: 2rem; border-right: 1px solid var(--line); }
@@ -266,6 +311,19 @@ button { font: inherit; }
 .dark-publications .publication-meta, .dark-publications .publication-year { color: var(--muted); }
 .dark-publications .publication-link { color: var(--mint-bright); }
 .dark-publications .publication:hover h3 { color: var(--mint-bright); }
+.dark-publications .publication-authors { color: var(--muted); }
+.dark-publications .publication-authors summary { color: var(--mint); }
+
+.output-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; border: 1px solid rgba(11,33,27,.18); background: rgba(11,33,27,.18); }
+.output-card { min-height: 270px; padding: 1.8rem; color: var(--ink); background: var(--paper); }
+.output-label { display: flex; justify-content: space-between; gap: 1rem; color: #527067; font: 800 .68rem/1.4 monospace; letter-spacing: .11em; text-transform: uppercase; }
+.output-card h3 { margin: 2.2rem 0 .8rem; font: 400 clamp(1.35rem, 2vw, 1.85rem)/1.17 "Palatino Linotype", "Book Antiqua", Georgia, serif; letter-spacing: -.02em; }
+.output-meta { color: #4f6864; font-size: .83rem; }
+.output-actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.3rem; align-items: center; }
+.output-actions a, .output-actions .publication-action { color: #31574d; border-color: rgba(11,33,27,.3); font-size: .68rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.output-actions a::after { content: " ↗"; color: #777b43; }
+.output-actions .publication-action:hover, .output-actions .publication-action:focus-visible { color: var(--ink); border-color: var(--ink); }
+.output-actions .publication-action.is-copied { color: #777b43; border-color: #777b43; }
 
 .timeline { position: relative; margin-left: 190px; border-left: 1px solid var(--line); }
 .timeline-item { position: relative; display: grid; grid-template-columns: 160px 1fr; gap: 2rem; padding: 0 0 4rem 3rem; }
@@ -304,9 +362,13 @@ button { font: inherit; }
   .menu-toggle { display: block; }
   .site-nav { display: none; position: absolute; top: 82px; left: 0; right: 0; padding: 1.5rem 20px 2rem; background: var(--ink); border-bottom: 1px solid var(--line); flex-direction: column; align-items: flex-start; }
   .site-nav.is-open { display: flex; }
-  .hero-grid, .profile-grid, .contact-grid { grid-template-columns: 1fr; }
+  .hero-grid, .profile-grid, .contact-grid, .research-theme-grid { grid-template-columns: 1fr; }
   .hero-visual { min-height: 420px; }
   .research-grid, .project-grid { grid-template-columns: 1fr; }
+  .selected-publication-grid, .output-grid { grid-template-columns: 1fr; }
+  .career-arc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .career-arc > div:nth-child(2) { border-right: 0; }
+  .career-arc > div:nth-child(-n+2) { border-bottom: 1px solid rgba(11,33,27,.2); }
   .research-card, .project-card { min-height: 300px; }
   .research-card h3, .project-card h3 { margin-top: 3rem; }
   .timeline { margin-left: 0; }
@@ -323,12 +385,16 @@ button { font: inherit; }
   .hero h1 span { margin-left: 0; }
   .hero-visual { min-height: 340px; }
   .publication { grid-template-columns: 70px 1fr; }
-  .publication-link { grid-column: 2; }
+  .publication-actions { grid-column: 2; }
   .publication-tools, .publication-note { grid-template-columns: 1fr; }
+  .publication-tool-actions { align-items: flex-start; justify-content: space-between; }
   .publication-summary { text-align: left; }
   .facts { grid-template-columns: 1fr; }
   .fact { border-right: 0; border-bottom: 1px solid var(--line); }
   .fact:last-child { border-bottom: 0; }
   .timeline-item { grid-template-columns: 1fr; gap: .4rem; padding-left: 1.5rem; }
   .footer-inner { flex-direction: column; gap: .5rem; }
+  .career-arc { grid-template-columns: 1fr; }
+  .career-arc > div { border-right: 0; border-bottom: 1px solid rgba(11,33,27,.2); }
+  .career-arc > div:last-child { border-bottom: 0; }
 }

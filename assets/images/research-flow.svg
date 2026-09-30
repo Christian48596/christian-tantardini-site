@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="t d">
+  <title id="t">Multiphase flow through porous media</title><desc id="d">Two fluid fronts move through a porous matrix.</desc>
+  <rect width="640" height="360" fill="#102c24"/><g fill="#dcebdd" opacity=".88"><circle cx="110" cy="95" r="32"/><circle cx="190" cy="160" r="43"/><circle cx="110" cy="250" r="39"/><circle cx="290" cy="80" r="38"/><circle cx="315" cy="235" r="52"/><circle cx="430" cy="140" r="46"/><circle cx="520" cy="245" r="40"/><circle cx="555" cy="78" r="30"/></g><path d="M20 180c80-75 135 65 220-10s140-45 205 10 120 45 175-18" fill="none" stroke="#9fc7a9" stroke-width="20" opacity=".65"/><path d="M20 180c80-75 135 65 220-10s140-45 205 10 120 45 175-18" fill="none" stroke="#b9b778" stroke-width="3"/><path d="m590 148 30 14-25 22" fill="none" stroke="#b9b778" stroke-width="3"/>
+</svg>
