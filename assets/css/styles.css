@@ -120,7 +120,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   align-items: start;
   margin-bottom: 3rem;
 }
-.section-heading h2, .page-intro h1 {
+.section-heading h2, .section-heading h1, .page-intro h1 {
   margin: 0;
   max-width: 900px;
   font-family: var(--font-display);
@@ -129,7 +129,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   line-height: 1.04;
   text-wrap: balance;
 }
-.section-heading h2 { font-size: clamp(2.35rem, 4vw, 4rem); }
+.section-heading h2, .section-heading h1 { font-size: clamp(2.35rem, 4vw, 4rem); }
 .section-heading p { max-width: 700px; margin: 1.1rem 0 0; }
 .eyebrow {
   display: inline-flex;
@@ -383,7 +383,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   .portrait-image { height: 340px; border-radius: 22px; object-position: center 31%; }
   .page-intro { padding: 4rem 0 3.5rem; }
   .page-intro h1 { font-size: clamp(3.2rem, 16vw, 4.3rem); }
-  .section-heading h2 { font-size: clamp(2.15rem, 11vw, 3rem); }
+  .section-heading h2, .section-heading h1 { font-size: clamp(2.15rem, 11vw, 3rem); }
   .selected-publication-card { min-height: 290px; }
   .publication { grid-template-columns: 70px 1fr; }
   .publication-actions { grid-column: 2; flex-direction: row; flex-wrap: wrap; gap: .8rem; }
@@ -564,4 +564,23 @@ body:not(.home-page) .site-footer { color: #536861; }
   .research-area { padding: .85rem 0; }
   .research-area h2 { font-size: 1.08rem; }
   .research-area a { font-size: .87rem; }
+}
+
+/* Compact secondary pages */
+.compact-page .page-intro { padding: clamp(2.5rem, 4vw, 3.5rem) 0 2.3rem; }
+.compact-page .page-intro h1 { font-size: clamp(3.2rem, 5vw, 5rem); }
+.compact-page .page-intro p { margin-top: 1rem; font-size: 1rem; line-height: 1.55; }
+.compact-page .section { padding: 2.6rem 0 4rem; }
+.cv-page .page-intro p { max-width: 900px; }
+.activity-list { border-top: 1px solid rgba(11,33,27,.18); }
+.activity-entry { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 2rem; padding: 1.2rem 0 1.35rem; border-bottom: 1px solid rgba(11,33,27,.18); }
+.activity-date { padding-top: .27rem; color: #66722f; font-size: .7rem; font-weight: 750; letter-spacing: .1em; }
+.activity-entry h2 { margin: 0 0 .35rem; font: 620 clamp(1.15rem, 1.6vw, 1.45rem)/1.2 var(--font-display); letter-spacing: -.025em; }
+.activity-entry p { max-width: 780px; margin: 0 0 .45rem; color: #536861; font-size: .91rem; line-height: 1.5; }
+.activity-entry a { font-size: .8rem; }
+@media (max-width: 680px) {
+  .compact-page .page-intro { padding: 2.6rem 0 2rem; }
+  .compact-page .page-intro h1 { font-size: 3.3rem; }
+  .compact-page .section { padding: 2.2rem 0 3rem; }
+  .activity-entry { grid-template-columns: 1fr; gap: .45rem; }
 }
