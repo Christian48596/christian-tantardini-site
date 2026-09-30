@@ -179,22 +179,6 @@ if (publicationList && Array.isArray(window.publications)) {
     updatePublications();
   });
 
-  const exportBibtex = document.querySelector('[data-export-bibtex]');
-  if (exportBibtex) {
-    const escapeBibtex = (value) => value.replaceAll('&', '\\&').replaceAll('{', '\\{').replaceAll('}', '\\}');
-    const usedKeys = new Map();
-    const bibtex = window.publications.map(([year, title, journal, doi]) => {
-      const authors = window.publicationAuthors?.[doi.toLowerCase()] ?? 'Tantardini, Christian';
-      const keyWord = title.replace(/[^A-Za-z0-9 ]/g, '').split(/\s+/).find((word) => word.length > 4) ?? 'Work';
-      const baseKey = `Tantardini${year}${keyWord}`;
-      const occurrence = usedKeys.get(baseKey) ?? 0;
-      usedKeys.set(baseKey, occurrence + 1);
-      const key = occurrence === 0 ? baseKey : `${baseKey}${String.fromCharCode(97 + occurrence)}`;
-      return `@article{${key},\n  author = {${escapeBibtex(authors.replaceAll('; ', ' and '))}},\n  title = {${escapeBibtex(title)}},\n  journal = {${escapeBibtex(journal)}},\n  year = {${year}},\n  doi = {${doi}},\n  url = {https://doi.org/${doi}}\n}`;
-    }).join('\n\n');
-    exportBibtex.href = `data:application/x-bibtex;charset=utf-8,${encodeURIComponent(bibtex)}`;
-    exportBibtex.download = 'christian-tantardini-publications.bib';
-  }
 }
 
 const otherOutputGrid = document.querySelector('[data-other-outputs]');
