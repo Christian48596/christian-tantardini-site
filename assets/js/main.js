@@ -5,6 +5,7 @@ if (menuButton && nav) {
   menuButton.addEventListener('click', () => {
     const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
     menuButton.setAttribute('aria-expanded', String(!isOpen));
+    menuButton.textContent = isOpen ? 'Menu' : 'Close';
     nav.classList.toggle('is-open', !isOpen);
   });
 }
@@ -12,6 +13,7 @@ if (menuButton && nav) {
 document.querySelectorAll('.site-nav a').forEach((link) => {
   link.addEventListener('click', () => {
     menuButton?.setAttribute('aria-expanded', 'false');
+    if (menuButton) menuButton.textContent = 'Menu';
     nav?.classList.remove('is-open');
   });
 });
@@ -57,6 +59,7 @@ const createCopyButton = (label, value) => {
   button.className = 'publication-action';
   button.type = 'button';
   button.textContent = label;
+  button.setAttribute('aria-live', 'polite');
   button.addEventListener('click', () => copyText(value, button));
   return button;
 };
