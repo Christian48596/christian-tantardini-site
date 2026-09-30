@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 570" role="img" aria-labelledby="title desc">
+  <title id="title">Six studies in ink</title>
+  <desc id="desc">A hand-drawn scientific plate with electron-density contours, a crystal, numerical grid, magnetism, a spectrum and porous flow.</desc>
+  <rect width="500" height="570" fill="#f0ece1"/>
+  <g stroke="#bbbaa9" stroke-width=".8" fill="none">
+    <path d="M250 25v520M25 190h450M25 370h450"/>
+    <path d="M36 35h15m-15 0v15M449 35h15m0 0v15M36 535h15m-15 0v-15M449 535h15m0 0v-15"/>
+  </g>
+  <g fill="#69796c" font-family="Georgia, serif" font-size="14" font-style="italic">
+    <text x="38" y="55">i</text><text x="264" y="55">ii</text>
+    <text x="38" y="220">iii</text><text x="264" y="220">iv</text>
+    <text x="38" y="397">v</text><text x="264" y="397">vi</text>
+  </g>
+
+  <!-- I. Electron-density contours: two centres share a continuous field. -->
+  <g transform="translate(135 116)" fill="none" stroke="#31594d" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke-width="1.6" d="M-89 1C-88-33-55-57-25-54c22 2 30 20 50 18 23-2 27-25 54-20 31 6 47 28 46 54-1 27-19 52-50 54-25 2-30-17-52-17-23 0-29 19-57 17C-66 50-89 29-89 1Z"/>
+    <path stroke-width="1.1" d="M-73 1c0-26 20-43 44-43 21 1 30 19 53 19 21 0 33-19 52-18 23 1 38 20 38 42-1 20-15 39-38 39-19 1-32-17-53-17-22 0-32 17-53 17-26 0-43-16-43-39Z"/>
+    <path stroke-width=".9" d="M-53 0c1-18 11-28 26-28 20 0 29 19 51 20 24 1 34-19 52-19 13 0 23 11 23 27 0 15-9 26-23 26-19 0-29-18-53-18-22 0-31 18-51 19C-43 28-54 17-53 0Z"/>
+    <path stroke-width=".8" d="M-31 0c5-12 14-10 23-6 11 6 21 10 32 10 12 0 20-3 32-10 11-6 18-4 23 6"/>
+    <circle cx="-30" cy="0" r="5" fill="#31594d" stroke="none"/>
+    <circle cx="78" cy="0" r="5" fill="#31594d" stroke="none"/>
+    <path stroke="#9c9b67" stroke-width="1" stroke-dasharray="2 4" d="M-22 0h92"/>
+  </g>
+
+  <!-- II. A tilted, slightly imperfect hexagonal lattice under compression. -->
+  <g transform="translate(356 110)" fill="none" stroke="#31594d" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke-width="1.2">
+      <path d="M-70-20l27-16 28 16 1 31-27 16-29-16Zm55 0 28-16 28 16 1 31-28 16-28-16Zm-27 47 27-16 29 16v31l-28 16-28-16Zm55 0 28-16 27 16 1 31-28 16-27-16Z"/>
+      <path d="M-70-20l29 47m26-47 1 31m55-31L14 27m-56 0 28 47m55-47L14 74" opacity=".6"/>
+    </g>
+    <g fill="#31594d" stroke="none"><circle cx="-70" cy="-20" r="3"/><circle cx="-15" cy="-20" r="3"/><circle cx="41" cy="-20" r="3"/><circle cx="-42" cy="27" r="3"/><circle cx="14" cy="27" r="3"/><circle cx="68" cy="27" r="3"/><circle cx="-14" cy="74" r="3"/><circle cx="41" cy="74" r="3"/></g>
+    <g stroke="#9c9b67" stroke-width="1.4"><path d="M-88-60v20m-6-7 6 7 6-7M85-60v20m-6-7 6 7 6-7"/></g>
+  </g>
+
+  <!-- III. Nested numerical grids and a sampled wave. -->
+  <g transform="translate(137 288)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#aab4a8" stroke-width=".8"><path d="M-90-46v94M-58-46v94M-26-46v94M6-46v94M38-46v94M70-46v94M-90-38H90M-90-6H90M-90 26H90"/></g>
+    <g stroke="#31594d" stroke-width="1"><path d="M-58-38v64M-42-38v64M-26-38v64M-10-38v64M6-38v64M-58-22H6M-58-6H6M-58 10H6"/></g>
+    <path stroke="#31594d" stroke-width="2" d="M-91 12c17-3 21-37 39-35 17 3 23 42 43 39C7 14 11-30 28-31c21-2 30 38 62 24"/>
+    <g fill="#9c9b67" stroke="none"><circle cx="-58" cy="-22" r="2.6"/><circle cx="-26" cy="22" r="2.6"/><circle cx="6" cy="13" r="2.6"/><circle cx="38" cy="-27" r="2.6"/></g>
+  </g>
+
+  <!-- IV. Spin-bearing atoms; arrow directions interrupt the lattice. -->
+  <g transform="translate(359 282)" fill="none" stroke="#31594d" stroke-linecap="round">
+    <g stroke-width="1"><path d="M-63-34l55-1 55 1M-62 25l54-2 54 2M-63-34l1 59m54-60v58m55-57-1 59M-63-34l55 57m0-58 54 60m-109 0 55-60m0 58 55-57" opacity=".65"/></g>
+    <g fill="#f0ece1" stroke-width="1.8"><circle cx="-63" cy="-34" r="8"/><circle cx="-8" cy="-35" r="8"/><circle cx="47" cy="-34" r="8"/><circle cx="-62" cy="25" r="8"/><circle cx="-8" cy="23" r="8"/><circle cx="46" cy="25" r="8"/></g>
+    <g stroke="#9c9b67" stroke-width="1.7" stroke-linejoin="round"><path d="M-63-49v-25m-5 7 5-7 5 7M-8-20V5m-5-7 5 7 5-7M47-49v-25m-5 7 5-7 5 7M-62 10v-25m-5 7 5-7 5 7M-8 39v25m-5-7 5 7 5-7M46 10v-25m-5 7 5-7 5 7"/></g>
+  </g>
+
+  <!-- V. A measured spectrum, drawn as one continuous pen stroke. -->
+  <g transform="translate(136 476)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#aab4a8" stroke-width=".9"><path d="M-95 53h190M-85-58V53M-49 53v5M-9 53v5M31 53v5M71 53v5"/></g>
+    <path stroke="#31594d" stroke-width="1.9" d="M-85 43c10-2 16-3 24-7 8-5 10-9 15-12 5-2 7 4 11 3 7-2 12-42 20-62 3-8 8-8 11 0 8 22 12 49 18 54 6 4 9-23 16-30 6-7 9 13 13 20 5 8 9 4 15 6 11 2 17 13 37 15"/>
+    <path stroke="#9c9b67" stroke-width="1" stroke-dasharray="2 4" d="M-9-51V53M31-30V53"/>
+    <g fill="#69796c" font-family="Georgia, serif" font-size="10" stroke="none"><text x="-13" y="-57">ω₁</text><text x="28" y="-36">ω₂</text></g>
+  </g>
+
+  <!-- VI. Flow lines threading irregular porous grains. -->
+  <g transform="translate(360 473)" stroke-linecap="round" stroke-linejoin="round">
+    <g fill="#e2dfd1" stroke="#31594d" stroke-width="1.2">
+      <path d="M-89-30c12-16 30-15 39-7 14 13 10 24 0 32-9 8-26 5-35-5-6-7-8-13-4-20Z"/>
+      <path d="M-2-65c15-8 29 3 31 17 2 11-6 24-18 28-17 5-31-3-32-16-1-12 7-24 19-29Z"/>
+      <path d="M59-14c14-13 30-5 33 8 4 18-5 31-18 33-14 3-26-7-27-18-1-9 4-17 12-23Z"/>
+      <path d="M-62 30c10-16 30-18 41-8 10 10 8 25 0 33-13 13-29 10-38 0-8-8-8-18-3-25Z"/>
+      <path d="M14 37c11-10 22-6 27 2 6 10 0 22-9 26-13 5-27-1-28-11-1-6 3-13 10-17Z"/>
+    </g>
+    <g fill="none" stroke="#9c9b67" stroke-width="2"><path d="M-103 0c22 10 31 22 49 12 15-8 24-15 40-7 20 11 25 20 43 11 20-11 40-28 67-12"/><path d="m87-1 9 5-8 7"/></g>
+  </g>
+</svg>
