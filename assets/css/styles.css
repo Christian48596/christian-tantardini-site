@@ -16,7 +16,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scrollbar-gutter: stable; }
 body {
   margin: 0;
   color: var(--text);
@@ -510,7 +510,8 @@ body:not(.home-page) .cv-entry p,
 body:not(.home-page) .contact-row span,
 body:not(.home-page) .site-footer { color: #536861; }
 
-.publication-record { padding-top: clamp(4rem, 7vw, 6.5rem); }
+.publication-record { padding-top: clamp(2.5rem, 4vw, 3.5rem); }
+.publication-record-heading h1 { font-size: clamp(3.2rem, 5vw, 5rem); }
 .research-page .page-intro { padding-bottom: 2.8rem; }
 .research-overview { padding: 1rem 0 4.5rem; border-top: 0 !important; }
 .research-page .project-card { min-height: 240px; }
@@ -543,15 +544,16 @@ body:not(.home-page) .site-footer { color: #536861; }
 }
 
 /* Research as an editorial index: five self-described fields, each grounded in a paper. */
-.research-main { min-height: calc(100dvh - 139px); display: grid; align-items: center; }
+.research-main { min-height: calc(100dvh - 139px); display: grid; align-items: stretch; }
 .research-page .site-footer { padding: 1rem 0; }
-.research-index { padding: clamp(1.25rem, 2.5vh, 2rem) 0; }
-.research-index-header { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 1rem; }
-.research-index-header h1 { margin: .25rem 0 0; font: 630 clamp(3.3rem, 5vw, 5.8rem)/.98 var(--font-display); letter-spacing: -.065em; }
+.research-index { display: flex; flex-direction: column; padding: clamp(2.5rem, 4vw, 3.5rem) 0 1.5rem; }
+.research-index-header { display: grid; grid-template-columns: 160px minmax(0, 1fr) auto; align-items: start; gap: 2rem; margin-bottom: 1rem; }
+.research-index-header .eyebrow { grid-column: 1; }
+.research-index-header h1 { grid-column: 2; margin: 0; font: 630 clamp(3.2rem, 5vw, 5rem)/1.04 var(--font-display); letter-spacing: -.05em; }
 .research-index-link { margin-bottom: .35rem; padding-bottom: .14rem; border-bottom: 1px solid currentColor; color: #315f52; font-size: .83rem; font-weight: 700; white-space: nowrap; }
 .research-index-link:hover { color: var(--ink); }
-.research-rows { border-top: 1px solid rgba(11,33,27,.22); }
-.research-row { display: grid; grid-template-columns: 2.3rem 4.8rem minmax(190px, .92fr) minmax(0, 1.32fr); gap: clamp(.8rem, 2vw, 1.8rem); align-items: center; min-height: 88px; padding: .5rem 0; border-bottom: 1px solid rgba(11,33,27,.2); }
+.research-rows { flex: 1; display: grid; grid-template-rows: repeat(5, minmax(0, 1fr)); border-top: 1px solid rgba(11,33,27,.22); }
+.research-row { display: grid; grid-template-columns: 2.3rem 4.8rem minmax(190px, .92fr) minmax(0, 1.32fr); gap: clamp(.8rem, 2vw, 1.8rem); align-items: center; min-height: 82px; padding: .5rem 0; border-bottom: 1px solid rgba(11,33,27,.2); }
 .research-number { align-self: start; padding-top: 1.25rem; color: #667760; font-size: .72rem; font-weight: 750; letter-spacing: .07em; }
 .research-symbol { width: 66px; height: 66px; }
 .research-row h2 { margin: 0; font: 630 clamp(1.45rem, 2vw, 2.25rem)/1.13 var(--font-display); letter-spacing: -.035em; text-wrap: balance; }
@@ -564,14 +566,24 @@ body:not(.home-page) .site-footer { color: #536861; }
 @media (max-width: 900px) {
   .research-main { min-height: auto; }
   .research-index { padding: 2.5rem 0 4rem; }
+  .research-rows { display: block; }
   .research-row { grid-template-columns: 2rem 4rem minmax(0, 1fr); gap: .15rem 1rem; padding: 1rem 0; }
   .research-number { grid-row: 1 / span 2; padding-top: .9rem; }
   .research-symbol { grid-row: 1 / span 2; width: 58px; height: 58px; }
   .research-row h2, .research-paper { grid-column: 3; }
   .research-row h2 { font-size: clamp(1.25rem, 3.2vw, 1.7rem); }
 }
+@media (max-width: 680px) {
+  .research-index { padding-top: 2.6rem; }
+  .research-index-header { grid-template-columns: 1fr; gap: 1.2rem; }
+  .research-index-header .eyebrow,
+  .research-index-header h1,
+  .research-index-link { grid-column: 1; }
+  .research-index-header h1 { font-size: 3.3rem; }
+  .publication-record { padding-top: 2.6rem; }
+  .publication-record-heading h1 { font-size: 3.3rem; }
+}
 @media (max-width: 520px) {
-  .research-index-header { align-items: start; flex-direction: column; gap: .6rem; }
   .research-index-link { margin: 0; }
   .research-row { grid-template-columns: 1.5rem 3.1rem minmax(0, 1fr); gap: .15rem .6rem; }
   .research-number { font-size: .65rem; }
