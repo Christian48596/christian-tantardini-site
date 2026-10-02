@@ -436,7 +436,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .home-fields li { padding: .48rem 0; border-bottom: 1px solid rgba(11,33,27,.18); color: var(--ink); font-size: clamp(.98rem, 1.15vw, 1.16rem); line-height: 1.3; }
 .home-about .profile-links { margin-top: 1.3rem; color: #31574d; font-size: .82rem; }
 .home-portrait { justify-self: end; }
-.home-portrait .portrait-image { width: min(100%, 330px); height: min(64vh, 570px); min-height: 430px; border-color: rgba(11,33,27,.2); border-radius: 24px; box-shadow: 0 22px 55px rgba(11,33,27,.12); }
+.home-portrait .portrait-image { width: auto; height: auto; max-width: min(100%, 330px); max-height: min(64vh, 570px); object-fit: contain; object-position: center; border-color: rgba(11,33,27,.2); border-radius: 24px; box-shadow: 0 22px 55px rgba(11,33,27,.12); }
 .home-page .site-footer { padding: 1rem 0; color: #536861; border-color: rgba(11,33,27,.16); }
 
 /* A single light visual system for all internal pages */
@@ -527,7 +527,7 @@ body:not(.home-page) .site-footer { color: #536861; }
   .home-stage { grid-template-columns: 1fr; }
   .home-about, .home-portrait { grid-column: 1; grid-row: auto; }
   .home-portrait { justify-self: start; }
-  .home-portrait .portrait-image { width: min(100%, 520px); height: 480px; min-height: 0; }
+  .home-portrait .portrait-image { max-width: min(100%, 520px); max-height: 480px; }
 }
 
 @media (max-width: 680px) {
@@ -535,7 +535,7 @@ body:not(.home-page) .site-footer { color: #536861; }
   .home-identity h1 { font-size: clamp(3.5rem, 17vw, 4.7rem); }
   .home-about h2 { font-size: 2.25rem; }
   .home-about p { font-size: .96rem; }
-  .home-portrait .portrait-image { height: 360px; }
+  .home-portrait .portrait-image { max-height: 360px; }
   .publication-record { padding-top: 4rem; }
 }
 
