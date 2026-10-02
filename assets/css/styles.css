@@ -460,7 +460,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   mask-image: linear-gradient(to bottom, #000 8%, #000 38%, transparent 82%);
   pointer-events: none;
 }
-.home-page .header-inner,
 .home-page .footer-inner { width: min(calc(100% - 40px), 1740px); }
 .home-stage {
   position: relative;
@@ -698,7 +697,6 @@ body:not(.home-page) .site-footer { color: #536861; }
   .home-portrait .portrait-image { max-height: 68vh; }
 }
 @media (max-width: 680px) {
-  .home-page .header-inner,
   .home-page .footer-inner,
   .home-stage { width: min(calc(100% - 28px), 1740px); }
   .compact-page .page-intro { padding: 2.6rem 0 2rem; }
