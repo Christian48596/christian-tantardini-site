@@ -415,7 +415,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   width: min(90vw, 1600px);
   aspect-ratio: 1200 / 520;
   transform: translateX(-50%);
-  background: url("../images/bond-density-backdrop.svg?v=4") center / contain no-repeat;
+  background: url("../images/bond-density-backdrop.svg?v=5") center / contain no-repeat;
   opacity: .19;
   -webkit-mask-image: linear-gradient(to bottom, #000 8%, #000 38%, transparent 82%);
   mask-image: linear-gradient(to bottom, #000 8%, #000 38%, transparent 82%);
@@ -529,6 +529,7 @@ body:not(.home-page) .site-footer { color: #536861; }
 
 .publication-record { padding-top: clamp(2.5rem, 4vw, 3.5rem); }
 .publication-record-heading h1 { font-size: clamp(3.2rem, 5vw, 5rem); }
+.publication-record-heading p { font-size: 1.15rem; line-height: 1.6; }
 .research-page .page-intro { padding-bottom: 2.8rem; }
 .research-overview { padding: 1rem 0 4.5rem; border-top: 0 !important; }
 .research-page .project-card { min-height: 240px; }

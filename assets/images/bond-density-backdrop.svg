@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" fill="none">
-  <title>Electron-density contours with benzene, water, carbon dioxide and ammonia sketches</title>
+  <title>Electron-density contours with benzene, water and ammonia sketches</title>
   <defs>
     <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
       <path d="M36 0H0V36" stroke="#6f8879" stroke-opacity=".18" stroke-width=".8"/>
@@ -38,16 +38,6 @@
     <circle cx="1035" cy="102" r="11" stroke-width="2"/>
     <circle cx="990" cy="140" r="6" stroke-width="1.7"/>
     <circle cx="1080" cy="140" r="6" stroke-width="1.7"/>
-  </g>
-  <!-- Linear CO2: two double bonds, kept distinct from the density diagram. -->
-  <g transform="translate(230 -292)" stroke="#315b4d" stroke-opacity=".72" stroke-linecap="round" fill="none">
-    <path d="M112 367h27m-27 8h27m17-8h27m-27 8h27" stroke-width="1.7"/>
-    <circle cx="99" cy="371" r="12" stroke-width="1.8"/>
-    <circle cx="148" cy="371" r="9" stroke-width="1.8"/>
-    <circle cx="197" cy="371" r="12" stroke-width="1.8"/>
-  </g>
-  <g transform="translate(230 -292)" fill="#315b4d" fill-opacity=".82" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle">
-    <text x="99" y="375">O</text><text x="148" y="375">C</text><text x="197" y="375">O</text>
   </g>
   <!-- Simplified two-dimensional projection of NH3 at the opposite edge. -->
   <g stroke="#315b4d" stroke-opacity=".7" stroke-width="2" stroke-linecap="round">
