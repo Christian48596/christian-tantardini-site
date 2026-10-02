@@ -635,6 +635,7 @@ body:not(.home-page) .site-footer { color: #536861; }
 }
 .activities-page .page-intro p { font-size: 1.15rem; }
 .cv-page .page-intro p { font-size: 1.14rem; line-height: 1.6; }
+.contact-page .page-intro p { font-size: 1.15rem; line-height: 1.6; }
 .cv-page .cv-grid { gap: clamp(3rem, 6vw, 7rem); }
 .cv-page .cv-block h2 { font-size: 2.1rem; }
 .cv-page .cv-entry time { font-size: .85rem; }
