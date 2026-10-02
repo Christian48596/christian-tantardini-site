@@ -405,10 +405,26 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 /* Compact light home */
 .home-page { min-height: 100dvh; color: var(--ink); background: #f7f4ec; }
 .home-page::before { display: none; }
-.home-main { min-height: calc(100dvh - 139px); display: grid; }
+.home-main { position: relative; min-height: calc(100dvh - 139px); display: grid; isolation: isolate; }
+.home-main::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: clamp(1rem, 4vh, 3.5rem);
+  left: max(3%, calc((100% - 1740px) / 2));
+  width: min(72vw, 1200px);
+  aspect-ratio: 1200 / 520;
+  background: url("../images/bond-density-backdrop.svg") center / contain no-repeat;
+  opacity: .3;
+  -webkit-mask-image: linear-gradient(to bottom, #000 8%, #000 38%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 8%, #000 38%, transparent 100%);
+  pointer-events: none;
+}
 .home-page .header-inner,
 .home-page .footer-inner { width: min(calc(100% - 40px), 1740px); }
 .home-stage {
+  position: relative;
+  z-index: 1;
   width: min(calc(100% - 40px), 1740px);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, .9fr) minmax(340px, 1.15fr);
@@ -527,6 +543,7 @@ body:not(.home-page) .site-footer { color: #536861; }
 }
 
 @media (max-width: 960px) {
+  .home-main::before { display: none; }
   body:not(.home-page) .site-nav { background: #0d2b22; border-color: rgba(220,235,221,.2); }
   .home-stage { grid-template-columns: 1fr; }
   .home-about, .home-portrait { grid-column: 1; grid-row: auto; }

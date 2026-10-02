@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" fill="none">
+  <title>Abstract electron-density contours</title>
+  <defs>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" stroke="#6f8879" stroke-opacity=".18" stroke-width=".8"/>
+    </pattern>
+    <linearGradient id="contour" x1="185" y1="250" x2="1000" y2="250" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4d7161" stop-opacity=".3"/>
+      <stop offset=".48" stop-color="#315b4d" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#8b936c" stop-opacity=".35"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#grid)" d="M120 50h960v420H120z"/>
+  <g stroke="#517363" stroke-opacity=".32" stroke-width="1">
+    <path d="M122 260h956M420 52v416M744 52v416" stroke-dasharray="3 10"/>
+    <path d="M138 260h20m-10-10v20M1042 260h20m-10-10v20"/>
+  </g>
+  <g stroke="url(#contour)" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M157 260c0-154 115-230 263-230 84 0 145 38 162 78 18-40 80-78 162-78 148 0 263 76 263 230S892 490 744 490c-82 0-144-38-162-78-17 40-78 78-162 78-148 0-263-76-263-230Z" stroke-width="1.2"/>
+    <path d="M201 260c0-126 94-190 219-190 70 0 127 34 162 76 35-42 92-76 162-76 125 0 219 64 219 190s-94 190-219 190c-70 0-127-34-162-76-35 42-92 76-162 76-125 0-219-64-219-190Z" stroke-width="1.25"/>
+    <path d="M247 260c0-101 73-151 173-151 74 0 135 41 162 91 27-50 88-91 162-91 100 0 173 50 173 151s-73 151-173 151c-74 0-135-41-162-91-27 50-88 91-162 91-100 0-173-50-173-151Z" stroke-width="1.4"/>
+    <path d="M294 260c0-74 51-110 126-110 67 0 122 43 162 110 40-67 95-110 162-110 75 0 126 36 126 110s-51 110-126 110c-67 0-122-43-162-110-40 67-95 110-162 110-75 0-126-36-126-110Z" stroke-width="1.55"/>
+    <path d="M338 260c0-48 33-69 82-69 68 0 120 69 162 69 42 0 94-69 162-69 49 0 82 21 82 69s-33 69-82 69c-68 0-120-69-162-69-42 0-94 69-162 69-49 0-82-21-82-69Z" stroke-width="1.7"/>
+  </g>
+  <g stroke="#365e50" stroke-opacity=".45" stroke-width="1">
+    <circle cx="420" cy="260" r="14"/>
+    <circle cx="744" cy="260" r="14"/>
+    <path d="M434 260h296" stroke-dasharray="2 7"/>
+  </g>
+  <circle cx="420" cy="260" r="4" fill="#365e50" fill-opacity=".7"/>
+  <circle cx="744" cy="260" r="4" fill="#365e50" fill-opacity=".7"/>
+</svg>
