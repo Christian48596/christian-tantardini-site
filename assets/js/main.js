@@ -28,6 +28,7 @@ const publicationSearch = document.querySelector('[data-publication-search]');
 const publicationCount = document.querySelector('[data-publication-count]');
 const publicationEmpty = document.querySelector('[data-publication-empty]');
 let activePublicationYear = 'all';
+const normalizeTitleSearch = (value) => value.toLocaleLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 
 const copyText = async (text, button) => {
   try {
@@ -108,7 +109,7 @@ if (publicationList && Array.isArray(window.publications)) {
     const article = document.createElement('article');
     article.className = `publication${type === 'correction' ? ' publication-correction' : ''}`;
     article.dataset.publicationYear = String(year);
-    article.dataset.publicationTitle = title.toLocaleLowerCase();
+    article.dataset.publicationTitle = normalizeTitleSearch(title);
 
     const yearLabel = document.createElement('span');
     yearLabel.className = 'publication-year';
@@ -144,23 +145,27 @@ if (publicationList && Array.isArray(window.publications)) {
 
   const publicationItems = publicationList.querySelectorAll('[data-publication-year]');
   const updatePublications = () => {
-    const query = publicationSearch?.value.trim().toLocaleLowerCase() ?? '';
+    const queryWords = normalizeTitleSearch(publicationSearch?.value ?? '').split(/\s+/).filter(Boolean);
     let visibleCount = 0;
     publicationItems.forEach((item) => {
       const matchesYear = activePublicationYear === 'all' || item.dataset.publicationYear === activePublicationYear;
-      const matchesQuery = !query || item.dataset.publicationTitle.includes(query);
+      const matchesQuery = queryWords.every((word) => item.dataset.publicationTitle.includes(word));
       const isVisible = matchesYear && matchesQuery;
       item.hidden = !isVisible;
       if (isVisible) visibleCount += 1;
     });
     if (publicationCount) publicationCount.textContent = String(visibleCount);
-    if (publicationEmpty) publicationEmpty.hidden = visibleCount !== 0;
+    if (publicationEmpty) {
+      publicationEmpty.hidden = visibleCount !== 0;
+      publicationEmpty.textContent = activePublicationYear === 'all'
+        ? 'No publication titles match this search.'
+        : `No publication titles match this search in ${activePublicationYear}.`;
+    }
   };
 
   publicationFilterBar?.querySelectorAll('[data-publication-filter]').forEach((button) => {
     button.addEventListener('click', () => {
       activePublicationYear = button.dataset.publicationFilter;
-      if (publicationSearch) publicationSearch.value = '';
       publicationFilterBar.querySelectorAll('[data-publication-filter]').forEach((item) => {
         const isActive = item === button;
         item.classList.toggle('is-active', isActive);
@@ -170,12 +175,6 @@ if (publicationList && Array.isArray(window.publications)) {
     });
   });
   publicationSearch?.addEventListener('input', () => {
-    activePublicationYear = 'all';
-    publicationFilterBar?.querySelectorAll('[data-publication-filter]').forEach((item) => {
-      const isActive = item.dataset.publicationFilter === 'all';
-      item.classList.toggle('is-active', isActive);
-      item.setAttribute('aria-pressed', String(isActive));
-    });
     updatePublications();
   });
 
