@@ -426,6 +426,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .home-about { align-self: center; max-width: 34rem; }
 .home-about h2 { margin: .7rem 0 1.2rem; font: 630 clamp(2rem, 2.7vw, 3rem)/1 var(--font-display); letter-spacing: -.05em; }
 .home-about p { margin: 0 0 .9rem; color: #c6d5d0; font-size: clamp(.88rem, .95vw, 1rem); line-height: 1.62; }
+.home-fields { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(198,213,208,.28); }
+.home-fields li { padding: .48rem 0; border-bottom: 1px solid rgba(198,213,208,.28); color: #e6eee8; font-size: clamp(.98rem, 1.15vw, 1.16rem); line-height: 1.3; }
 .home-about .profile-links { margin-top: 1.3rem; font-size: .82rem; }
 .home-portrait { justify-self: end; }
 .home-portrait .portrait-image { width: min(100%, 330px); height: min(64vh, 570px); min-height: 430px; border-radius: 24px; box-shadow: 0 24px 60px rgba(0,0,0,.24); }
