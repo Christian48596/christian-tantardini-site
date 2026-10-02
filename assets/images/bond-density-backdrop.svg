@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" fill="none">
-  <title>Abstract electron-density contours</title>
+  <title>Abstract electron-density contours with molecular sketches</title>
   <defs>
     <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
       <path d="M36 0H0V36" stroke="#6f8879" stroke-opacity=".18" stroke-width=".8"/>
@@ -29,4 +29,14 @@
   </g>
   <circle cx="420" cy="260" r="4" fill="#365e50" fill-opacity=".7"/>
   <circle cx="744" cy="260" r="4" fill="#365e50" fill-opacity=".7"/>
+  <g stroke="#315b4d" stroke-opacity=".78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M120 63 157 84v42l-37 21-37-21V84Z"/>
+    <path d="m121 72 28 16m0 34-28 16m-30-17V89" stroke-width="1.35"/>
+    <path d="M1035 102 990 140m45-38 45 38" stroke-width="3"/>
+  </g>
+  <g fill="#f7f4ec" stroke="#315b4d" stroke-opacity=".8">
+    <circle cx="1035" cy="102" r="11" stroke-width="2"/>
+    <circle cx="990" cy="140" r="6" stroke-width="1.7"/>
+    <circle cx="1080" cy="140" r="6" stroke-width="1.7"/>
+  </g>
 </svg>

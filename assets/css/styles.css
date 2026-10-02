@@ -410,14 +410,15 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   content: "";
   position: absolute;
   z-index: 0;
-  top: clamp(1rem, 4vh, 3.5rem);
-  left: max(3%, calc((100% - 1740px) / 2));
-  width: min(72vw, 1200px);
+  top: clamp(.5rem, 3vh, 2.5rem);
+  left: 50%;
+  width: min(90vw, 1600px);
   aspect-ratio: 1200 / 520;
-  background: url("../images/bond-density-backdrop.svg") center / contain no-repeat;
-  opacity: .3;
-  -webkit-mask-image: linear-gradient(to bottom, #000 8%, #000 38%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 8%, #000 38%, transparent 100%);
+  transform: translateX(-50%);
+  background: url("../images/bond-density-backdrop.svg?v=2") center / contain no-repeat;
+  opacity: .19;
+  -webkit-mask-image: linear-gradient(to bottom, #000 8%, #000 38%, transparent 82%);
+  mask-image: linear-gradient(to bottom, #000 8%, #000 38%, transparent 82%);
   pointer-events: none;
 }
 .home-page .header-inner,
