@@ -406,6 +406,26 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .home-page { min-height: 100dvh; color: var(--ink); background: #f7f4ec; }
 .home-page::before { display: none; }
 .home-main { position: relative; min-height: calc(100dvh - 139px); display: grid; isolation: isolate; }
+.birthday-garland {
+  position: absolute;
+  z-index: 3;
+  top: clamp(.9rem, 2.4vh, 1.5rem);
+  left: 50%;
+  display: flex;
+  align-items: flex-start;
+  width: max-content;
+  max-width: calc(100% - 40px);
+  transform: translateX(-50%);
+}
+.birthday-garland[hidden] { display: none; }
+.garland-string { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: .2rem .52rem; padding-top: .18rem; }
+.garland-string::before { content: ""; position: absolute; z-index: 1; top: .17rem; left: .2rem; right: .2rem; height: 1px; background: #4b6c5b; opacity: .75; }
+.garland-word { display: inline-flex; gap: 1px; white-space: nowrap; }
+.garland-letter { display: grid; place-items: start center; width: clamp(24px, 2vw, 32px); height: clamp(34px, 2.7vw, 44px); padding-top: .4rem; clip-path: polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%); color: #12362a; background: #c0d9bb; font-size: clamp(.8rem, 1vw, 1.05rem); font-weight: 740; line-height: 1.2; }
+.garland-letter:nth-child(3n) { background: #ded8a0; }
+.garland-letter:nth-child(4n) { background: #a8c7ad; }
+.garland-dismiss { flex: none; display: grid; place-items: center; width: 30px; height: 30px; margin: .15rem 0 0 .65rem; padding: 0; border: 1px solid rgba(11,33,27,.2); border-radius: 50%; color: #31574d; background: #f7f4ec; cursor: pointer; font-size: 1.15rem; line-height: 1; }
+.garland-dismiss:hover { background: #e8eee3; }
 .home-main::before {
   content: "";
   position: absolute;
@@ -546,6 +566,11 @@ body:not(.home-page) .site-footer { color: #536861; }
 
 @media (max-width: 960px) {
   .home-main::before { display: none; }
+  .birthday-garland { position: relative; top: auto; left: auto; width: min(100% - 28px, 600px); justify-self: center; margin-top: 1.25rem; transform: none; }
+  .garland-string { gap: .35rem .3rem; }
+  .garland-string::before { display: none; }
+  .garland-word { gap: 0; }
+  .garland-letter { width: 20px; height: 29px; padding-top: .31rem; font-size: .75rem; }
   body:not(.home-page) .site-nav { background: #0d2b22; border-color: rgba(220,235,221,.2); }
   .home-stage { grid-template-columns: 1fr; }
   .home-about, .home-portrait { grid-column: 1; grid-row: auto; }
@@ -555,6 +580,7 @@ body:not(.home-page) .site-footer { color: #536861; }
 
 @media (max-width: 680px) {
   .home-stage { gap: 3rem; padding: 3.5rem 0; }
+  .birthday-garland:not([hidden]) + .home-stage { padding-top: 2rem; }
   .home-identity h1 { font-size: clamp(3.5rem, 17vw, 4.7rem); }
   .home-about h2 { font-size: 2.25rem; }
   .home-about p { font-size: .96rem; }

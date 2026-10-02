@@ -1,6 +1,17 @@
 const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.site-nav');
 
+const birthdayGarland = document.querySelector('[data-birthday-garland]:not([hidden])');
+if (birthdayGarland) {
+  try {
+    birthdayGarland.hidden = sessionStorage.getItem('birthdayGarlandDismissed') === '1';
+  } catch { /* Storage is optional; the close button still works. */ }
+  birthdayGarland.querySelector('[data-garland-dismiss]')?.addEventListener('click', () => {
+    birthdayGarland.hidden = true;
+    try { sessionStorage.setItem('birthdayGarlandDismissed', '1'); } catch { /* No persistent state needed. */ }
+  });
+}
+
 if (menuButton && nav) {
   menuButton.addEventListener('click', () => {
     const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
