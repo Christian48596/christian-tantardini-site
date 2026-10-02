@@ -409,23 +409,42 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .birthday-garland {
   position: absolute;
   z-index: 3;
-  top: clamp(.9rem, 2.4vh, 1.5rem);
+  top: clamp(.65rem, 1.8vh, 1.2rem);
   left: 50%;
-  display: flex;
-  align-items: flex-start;
+  display: block;
   width: max-content;
-  max-width: calc(100% - 40px);
+  max-width: calc(100% - 80px);
   transform: translateX(-50%);
 }
 .birthday-garland[hidden] { display: none; }
-.garland-string { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: .2rem .52rem; padding-top: .18rem; }
-.garland-string::before { content: ""; position: absolute; z-index: 1; top: .17rem; left: .2rem; right: .2rem; height: 1px; background: #4b6c5b; opacity: .75; }
-.garland-word { display: inline-flex; gap: 1px; white-space: nowrap; }
-.garland-letter { display: grid; place-items: start center; width: clamp(24px, 2vw, 32px); height: clamp(34px, 2.7vw, 44px); padding-top: .4rem; clip-path: polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%); color: #12362a; background: #c0d9bb; font-size: clamp(.8rem, 1vw, 1.05rem); font-weight: 740; line-height: 1.2; }
+.garland-string { display: grid; justify-items: center; gap: .45rem; }
+.garland-row { position: relative; display: flex; justify-content: center; align-items: flex-start; gap: .75rem; padding-top: .2rem; }
+.garland-row::before { content: ""; position: absolute; z-index: 1; top: .16rem; left: .2rem; right: .2rem; height: 1px; background: #4b6c5b; opacity: .75; }
+.garland-word { display: inline-flex; gap: .18rem; white-space: nowrap; }
+.garland-letter { display: grid; place-items: start center; width: clamp(29px, 2.5vw, 38px); height: clamp(40px, 3.2vw, 50px); padding-top: .45rem; clip-path: polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%); color: #12362a; background: #c0d9bb; font-size: clamp(.9rem, 1.15vw, 1.12rem); font-weight: 740; line-height: 1.2; text-transform: uppercase; }
 .garland-letter:nth-child(3n) { background: #ded8a0; }
 .garland-letter:nth-child(4n) { background: #a8c7ad; }
-.garland-dismiss { flex: none; display: grid; place-items: center; width: 30px; height: 30px; margin: .15rem 0 0 .65rem; padding: 0; border: 1px solid rgba(11,33,27,.2); border-radius: 50%; color: #31574d; background: #f7f4ec; cursor: pointer; font-size: 1.15rem; line-height: 1; }
+.garland-dismiss { position: absolute; top: .15rem; right: -2.3rem; display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 1px solid rgba(11,33,27,.2); border-radius: 50%; color: #31574d; background: #f7f4ec; cursor: pointer; font-size: 1.15rem; line-height: 1; }
 .garland-dismiss:hover { background: #e8eee3; }
+.birthday-balloons { position: fixed; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; }
+.birthday-garland[hidden] + .birthday-balloons { display: none; }
+.balloon { position: absolute; top: 0; left: var(--x); width: clamp(30px, 3.4vw, 46px); height: clamp(39px, 4.5vw, 60px); border-radius: 50% 50% 46% 46%; background: var(--balloon-color); box-shadow: inset -8px -10px 12px rgba(11,33,27,.12), inset 7px 8px 10px rgba(255,255,255,.28); opacity: 0; animation: balloon-rise var(--duration) ease-out var(--delay) both; }
+.balloon::before { content: ""; position: absolute; top: calc(100% - 1px); left: calc(50% - 5px); width: 0; height: 0; border: 5px solid transparent; border-top: 9px solid var(--balloon-color); }
+.balloon::after { content: ""; position: absolute; top: calc(100% + 7px); left: 50%; width: 1px; height: 42px; background: rgba(49,87,77,.42); }
+.balloon:nth-child(1) { --x: 7%; --drift: 36px; --duration: 6.2s; --delay: 0s; --balloon-color: #a7c5a6; }
+.balloon:nth-child(2) { --x: 19%; --drift: -28px; --duration: 5.8s; --delay: .35s; --balloon-color: #d6cc88; }
+.balloon:nth-child(3) { --x: 31%; --drift: 30px; --duration: 6.6s; --delay: .1s; --balloon-color: #afc9be; }
+.balloon:nth-child(4) { --x: 43%; --drift: -35px; --duration: 5.6s; --delay: .7s; --balloon-color: #e4dcb2; }
+.balloon:nth-child(5) { --x: 56%; --drift: 30px; --duration: 6.8s; --delay: .2s; --balloon-color: #91b6a5; }
+.balloon:nth-child(6) { --x: 68%; --drift: -22px; --duration: 5.9s; --delay: .8s; --balloon-color: #d2d5a4; }
+.balloon:nth-child(7) { --x: 80%; --drift: 26px; --duration: 6.4s; --delay: .45s; --balloon-color: #b9d0bd; }
+.balloon:nth-child(8) { --x: 92%; --drift: -28px; --duration: 6.1s; --delay: .65s; --balloon-color: #ddd4ac; }
+@keyframes balloon-rise {
+  0% { transform: translate3d(0, 105vh, 0) rotate(-5deg); opacity: 0; }
+  10%, 78% { opacity: .78; }
+  100% { transform: translate3d(var(--drift), -160px, 0) rotate(7deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .birthday-balloons { display: none; } }
 .home-main::before {
   content: "";
   position: absolute;
@@ -566,11 +585,12 @@ body:not(.home-page) .site-footer { color: #536861; }
 
 @media (max-width: 960px) {
   .home-main::before { display: none; }
-  .birthday-garland { position: relative; top: auto; left: auto; width: min(100% - 28px, 600px); justify-self: center; margin-top: 1.25rem; transform: none; }
-  .garland-string { gap: .35rem .3rem; }
-  .garland-string::before { display: none; }
-  .garland-word { gap: 0; }
-  .garland-letter { width: 20px; height: 29px; padding-top: .31rem; font-size: .75rem; }
+  .birthday-garland { position: relative; top: auto; left: auto; width: max-content; max-width: calc(100% - 64px); justify-self: center; margin-top: 1rem; transform: none; }
+  .garland-row::before { display: none; }
+  .garland-word { gap: .1rem; }
+  .garland-letter { width: 19px; height: 29px; padding-top: .33rem; font-size: .72rem; }
+  .garland-row { gap: .35rem; }
+  .balloon:nth-child(n+6) { display: none; }
   body:not(.home-page) .site-nav { background: #0d2b22; border-color: rgba(220,235,221,.2); }
   .home-stage { grid-template-columns: 1fr; }
   .home-about, .home-portrait { grid-column: 1; grid-row: auto; }
@@ -580,12 +600,17 @@ body:not(.home-page) .site-footer { color: #536861; }
 
 @media (max-width: 680px) {
   .home-stage { gap: 3rem; padding: 3.5rem 0; }
-  .birthday-garland:not([hidden]) + .home-stage { padding-top: 2rem; }
+  .birthday-garland:not([hidden]) ~ .home-stage { padding-top: 2rem; }
   .home-identity h1 { font-size: clamp(3.5rem, 17vw, 4.7rem); }
   .home-about h2 { font-size: 2.25rem; }
   .home-about p { font-size: .96rem; }
   .home-portrait .portrait-image { max-height: 460px; }
   .publication-record { padding-top: 4rem; }
+}
+@media (max-width: 360px) {
+  .garland-word { gap: 1px; }
+  .garland-letter { width: 17px; height: 27px; font-size: .66rem; }
+  .garland-dismiss { right: auto; left: -1.7rem; }
 }
 
 /* Research as an editorial index: five self-described fields, each grounded in a paper. */
