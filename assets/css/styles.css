@@ -416,12 +416,12 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .home-identity h1 {
   margin: 0 0 1.7rem;
   font-family: var(--font-display);
-  font-size: clamp(4rem, 6.5vw, 7rem);
+  font-size: clamp(4rem, 6.5vw, 5.5rem);
   font-weight: 650;
   letter-spacing: -.075em;
   line-height: .86;
 }
-.home-identity h1 span { display: block; color: #426755; }
+.home-identity h1 span { display: block; color: inherit; }
 .home-identity .hero-affiliation { display: grid; gap: .2rem; margin-bottom: 1.8rem; color: #536861; font-size: clamp(.98rem, 1.15vw, 1.12rem); line-height: 1.45; }
 .home-identity .hero-affiliation strong { margin-bottom: .3rem; color: var(--ink); font-size: clamp(1.2rem, 1.5vw, 1.45rem); }
 .home-page .button { color: #fff; border-color: #245446; background: #245446; }
