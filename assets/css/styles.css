@@ -703,3 +703,27 @@ body:not(.home-page) .site-footer { color: #536861; }
   .compact-page .section { padding: 2.2rem 0 3rem; }
   .activity-entry { grid-template-columns: 1fr; gap: .45rem; }
 }
+
+/* Keep the first divider at the same level on every secondary page. */
+.page-heading-rule {
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(11,33,27,.22);
+}
+.research-index { position: relative; }
+.research-index-header { grid-template-columns: 160px minmax(0,1fr); margin-bottom: 0; }
+.research-index-action { position: absolute; top: clamp(2.5rem, 4vw, 3.5rem); right: 0; }
+.research-index-link { margin: 0; }
+.research-rows { border-top: 0; }
+.publication-record-heading { margin-bottom: 0; }
+.page-heading-description { margin: .85rem 0 1.65rem calc(160px + 2rem); max-width: 900px; font-size: 1.15rem; line-height: 1.6; }
+.compact-page .page-intro { padding-bottom: 0; }
+.compact-page .page-intro p.page-heading-description { margin: .85rem 0 0 calc(160px + 2rem); max-width: 900px; }
+.compact-page .page-intro + .section { border-top: 0; padding-top: 2rem; }
+@media (max-width: 680px) {
+  .research-index-header { grid-template-columns: 1fr; }
+  .research-index-action { position: static; display: flex; justify-content: flex-end; padding: .8rem 0 .35rem; }
+  .page-heading-description,
+  .compact-page .page-intro p.page-heading-description { margin-left: 0; }
+  .compact-page .page-intro { padding-bottom: 0; }
+  .compact-page .page-intro + .section { padding-top: 1.6rem; }
+}
