@@ -1,4 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CT monogram">
-  <rect width="64" height="64" rx="18" fill="#9fc7a9"/>
-  <text x="32" y="42" text-anchor="middle" fill="#0d2b22" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="700" letter-spacing="-1">CT</text>
+  <rect width="64" height="64" rx="10" fill="#d4ddc5"/>
+  <text x="32" y="42" text-anchor="middle" fill="#14271f" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="700" letter-spacing="-1">CT</text>
 </svg>
