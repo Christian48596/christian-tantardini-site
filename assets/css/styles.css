@@ -77,8 +77,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   display: grid;
   place-items: center;
   color: var(--ink);
-  background: var(--mint);
-  border-radius: 12px;
+  background: transparent;
+  border-radius: 0;
   font-size: .82rem;
   letter-spacing: .08em;
 }
@@ -769,7 +769,7 @@ body:not(.home-page) .publication-action.is-copied { color: #304a37; }
 }
 
 /* Restrained forest green and pale sage finish. */
-.brand-mark { border-radius: 8px; }
+.brand-mark { border-radius: 0; }
 .button { border-radius: 8px; }
 .filter-button { border-radius: 10px; }
 .publication-search input { border-radius: 8px; }
