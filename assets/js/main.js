@@ -146,7 +146,14 @@ if (publicationList && Array.isArray(window.publications)) {
 
     const details = document.createElement('div');
     const heading = document.createElement('h3');
-    heading.textContent = title;
+    const titleLink = document.createElement('a');
+    titleLink.className = 'publication-title-link';
+    titleLink.href = `https://doi.org/${doi}`;
+    titleLink.target = '_blank';
+    titleLink.rel = 'noopener';
+    titleLink.textContent = title;
+    titleLink.setAttribute('aria-label', `${title} — open article (new tab)`);
+    heading.append(titleLink);
     const meta = document.createElement('div');
     meta.className = 'publication-meta';
     meta.append(document.createTextNode(journal));
