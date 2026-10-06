@@ -777,3 +777,12 @@ body:not(.home-page) .publication-action.is-copied { color: #304a37; }
 @media (max-width: 960px) {
   .home-page .site-nav { background: var(--header-bg); }
 }
+
+/* A complete two-column introduction until a new portrait is supplied. */
+.home-stage { width: min(calc(100% - 40px), 1500px); grid-template-columns: minmax(0,1.3fr) minmax(0,.9fr); gap: clamp(3rem, 8vw, 8rem); align-items: start; }
+.home-identity { grid-column: 1; grid-row: 1; align-self: start; }
+.home-about { grid-column: 2; grid-row: 1; align-self: start; width: 100%; max-width: none; }
+@media (max-width: 760px) {
+  .home-stage { width: calc(100% - 28px); grid-template-columns: minmax(0,1fr); gap: 2.5rem; }
+  .home-about { grid-column: 1; grid-row: 2; }
+}
