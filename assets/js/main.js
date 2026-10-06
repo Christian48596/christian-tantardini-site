@@ -13,21 +13,28 @@ if (birthdayGarland) {
 }
 
 if (menuButton && nav) {
+  const mobileMenu = window.matchMedia('(max-width: 960px)');
+  const setMenuOpen = (isOpen, returnFocus = false) => {
+    menuButton.setAttribute('aria-expanded', String(isOpen));
+    menuButton.textContent = isOpen ? 'Close' : 'Menu';
+    nav.classList.toggle('is-open', isOpen);
+    nav.inert = mobileMenu.matches && !isOpen;
+    if (returnFocus) menuButton.focus();
+  };
   menuButton.addEventListener('click', () => {
     const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
-    menuButton.setAttribute('aria-expanded', String(!isOpen));
-    menuButton.textContent = isOpen ? 'Menu' : 'Close';
-    nav.classList.toggle('is-open', !isOpen);
+    setMenuOpen(!isOpen);
   });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') setMenuOpen(false, true);
+  });
+  document.addEventListener('click', (event) => {
+    if (!nav.contains(event.target) && !menuButton.contains(event.target)) setMenuOpen(false);
+  });
+  mobileMenu.addEventListener('change', () => setMenuOpen(false));
+  nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenuOpen(false)));
+  setMenuOpen(false);
 }
-
-document.querySelectorAll('.site-nav a').forEach((link) => {
-  link.addEventListener('click', () => {
-    menuButton?.setAttribute('aria-expanded', 'false');
-    if (menuButton) menuButton.textContent = 'Menu';
-    nav?.classList.remove('is-open');
-  });
-});
 
 document.querySelectorAll('[data-current-year]').forEach((node) => {
   node.textContent = new Date().getFullYear();
@@ -38,29 +45,40 @@ const publicationFilterBar = document.querySelector('[data-publication-filters]'
 const publicationSearch = document.querySelector('[data-publication-search]');
 const publicationCount = document.querySelector('[data-publication-count]');
 const publicationEmpty = document.querySelector('[data-publication-empty]');
+const publicationReset = document.querySelector('[data-publication-reset]');
 let activePublicationYear = 'all';
 const normalizeTitleSearch = (value) => value.toLocaleLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 
 const copyText = async (text, button) => {
-  try {
-    await navigator.clipboard.writeText(text);
-  } catch {
-    const temporary = document.createElement('textarea');
-    temporary.value = text;
-    temporary.setAttribute('readonly', '');
-    temporary.style.position = 'fixed';
-    temporary.style.opacity = '0';
-    document.body.append(temporary);
-    temporary.select();
-    document.execCommand('copy');
-    temporary.remove();
-  }
+  if (button.getAttribute('aria-disabled') === 'true') return;
   const original = button.textContent;
-  button.textContent = 'Copied';
-  button.classList.add('is-copied');
+  button.setAttribute('aria-disabled', 'true');
+  let temporary;
+  try {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      temporary = document.createElement('textarea');
+      temporary.value = text;
+      temporary.setAttribute('readonly', '');
+      temporary.style.position = 'fixed';
+      temporary.style.opacity = '0';
+      document.body.append(temporary);
+      temporary.select();
+      if (!document.execCommand('copy')) throw new Error('Clipboard unavailable');
+    }
+    button.textContent = 'Copied';
+    button.classList.add('is-copied');
+  } catch {
+    button.textContent = 'Could not copy';
+  } finally {
+    temporary?.remove();
+    button.focus({ preventScroll: true });
+  }
   window.setTimeout(() => {
     button.textContent = original;
     button.classList.remove('is-copied');
+    button.removeAttribute('aria-disabled');
   }, 1400);
 };
 
@@ -155,17 +173,37 @@ if (publicationList && Array.isArray(window.publications)) {
   });
 
   const publicationItems = publicationList.querySelectorAll('[data-publication-year]');
-  const updatePublications = () => {
+  const updatePublications = (saveUrl = true) => {
     const queryWords = normalizeTitleSearch(publicationSearch?.value ?? '').split(/\s+/).filter(Boolean);
     let visibleCount = 0;
     publicationItems.forEach((item) => {
       const matchesYear = activePublicationYear === 'all' || item.dataset.publicationYear === activePublicationYear;
-      const matchesQuery = queryWords.every((word) => item.dataset.publicationTitle.includes(word));
+      const matchesQuery = queryWords.every((word) => {
+        const variants = [word];
+        // Common singular/plural forms, e.g. electronegativity/electronegativities.
+        if (word.length > 4 && word.endsWith('y')) variants.push(`${word.slice(0, -1)}i`);
+        if (word.length > 5 && word.endsWith('ies')) variants.push(`${word.slice(0, -3)}y`);
+        return variants.some((variant) => item.dataset.publicationTitle.includes(variant));
+      });
       const isVisible = matchesYear && matchesQuery;
       item.hidden = !isVisible;
       if (isVisible) visibleCount += 1;
     });
     if (publicationCount) publicationCount.textContent = String(visibleCount);
+    publicationFilterBar?.querySelectorAll('[data-publication-filter]').forEach((button) => {
+      const isActive = button.dataset.publicationFilter === activePublicationYear;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+    if (publicationReset) publicationReset.hidden = !publicationSearch.value.trim() && activePublicationYear === 'all';
+    if (saveUrl) {
+      const url = new URL(window.location.href);
+      if (publicationSearch.value.trim()) url.searchParams.set('q', publicationSearch.value.trim());
+      else url.searchParams.delete('q');
+      if (activePublicationYear !== 'all') url.searchParams.set('year', activePublicationYear);
+      else url.searchParams.delete('year');
+      window.history.replaceState(null, '', url);
+    }
     if (publicationEmpty) {
       publicationEmpty.hidden = visibleCount !== 0;
       publicationEmpty.textContent = activePublicationYear === 'all'
@@ -177,18 +215,27 @@ if (publicationList && Array.isArray(window.publications)) {
   publicationFilterBar?.querySelectorAll('[data-publication-filter]').forEach((button) => {
     button.addEventListener('click', () => {
       activePublicationYear = button.dataset.publicationFilter;
-      publicationFilterBar.querySelectorAll('[data-publication-filter]').forEach((item) => {
-        const isActive = item === button;
-        item.classList.toggle('is-active', isActive);
-        item.setAttribute('aria-pressed', String(isActive));
-      });
       updatePublications();
     });
   });
   publicationSearch?.addEventListener('input', () => {
     updatePublications();
   });
-
+  publicationReset?.addEventListener('click', () => {
+    publicationSearch.value = '';
+    activePublicationYear = 'all';
+    updatePublications();
+    publicationSearch.focus();
+  });
+  const restoreFilters = () => {
+    const parameters = new URLSearchParams(window.location.search);
+    publicationSearch.value = parameters.get('q') ?? '';
+    const year = parameters.get('year');
+    activePublicationYear = years.includes(year) ? year : 'all';
+    updatePublications(false);
+  };
+  window.addEventListener('popstate', restoreFilters);
+  restoreFilters();
 }
 
 const otherOutputGrid = document.querySelector('[data-other-outputs]');
@@ -216,11 +263,3 @@ if (otherOutputGrid && Array.isArray(window.otherResearchOutputs)) {
     otherOutputGrid.append(card);
   });
 }
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) entry.target.classList.add('is-visible');
-  });
-}, { threshold: 0.08 });
-
-document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
