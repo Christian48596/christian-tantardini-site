@@ -72,7 +72,6 @@ const copyText = async (text, button) => {
 };
 
 const publicationByDoi = new Map((window.publications ?? []).map((publication) => [publication[3].toLowerCase(), publication]));
-const formatCitation = ([year, title, journal, doi], authors) => `${authors.replaceAll('; ', ', ')} (${year}). ${title}. ${journal}. https://doi.org/${doi}`;
 const createCopyButton = (label, value) => {
   const button = document.createElement('button');
   button.className = 'publication-action';
@@ -153,7 +152,7 @@ if (publicationList && Array.isArray(window.publications)) {
     const authorList = document.createElement('p');
     authorList.textContent = authors.replaceAll('; ', ' · ');
     authorDetails.append(authorSummary, authorList);
-    details.append(heading, meta, authorDetails);
+    details.append(heading, meta);
 
     const actions = document.createElement('div');
     actions.className = 'publication-actions';
@@ -163,8 +162,12 @@ if (publicationList && Array.isArray(window.publications)) {
     link.target = '_blank';
     link.rel = 'noopener';
     link.textContent = 'DOI';
-    actions.append(link, createCopyButton('Copy DOI', doi), createCopyButton('Copy citation', formatCitation(publication, authors)));
-    article.append(yearLabel, details, actions);
+    actions.append(link, createCopyButton('Copy DOI', doi));
+    const footer = document.createElement('div');
+    footer.className = 'publication-footer';
+    footer.append(authorDetails, actions);
+    details.append(footer);
+    article.append(yearLabel, details);
     publicationList.append(article);
   });
 
