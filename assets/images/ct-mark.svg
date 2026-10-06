@@ -1,5 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CT monogram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CT monogram with an orbital motif">
   <rect width="64" height="64" fill="#06140f"/>
-  <rect x="3" y="3" width="58" height="58" fill="none" stroke="#bcc9b1" stroke-width="1.5"/>
-  <text x="32" y="42" text-anchor="middle" fill="#f0f1e6" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="600" letter-spacing=".5">CT</text>
+  <rect x="3" y="3" width="58" height="58" fill="none" stroke="#bcc9b1" stroke-width="1.2"/>
+  <ellipse cx="32" cy="32" rx="26" ry="13" transform="rotate(-28 32 32)" fill="none" stroke="#9da780" stroke-width="1.5"/>
+  <circle cx="55" cy="19.8" r="2.5" fill="#d4ddc5"/>
+  <path d="M28 24c-4-4-12-3-13 5-2 9 5 15 13 11M34 23h15M41.5 23v18" fill="none" stroke="#06140f" stroke-width="8" stroke-linecap="square" stroke-linejoin="round"/>
+  <path d="M28 24c-4-4-12-3-13 5-2 9 5 15 13 11M34 23h15M41.5 23v18" fill="none" stroke="#f0f1e6" stroke-width="4" stroke-linecap="square" stroke-linejoin="round"/>
 </svg>
