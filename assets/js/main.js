@@ -1,6 +1,14 @@
 const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.site-nav');
 
+document.querySelector('.skip-link')?.addEventListener('click', (event) => {
+  const main = document.querySelector('#main');
+  if (!main) return;
+  event.preventDefault();
+  main.focus({ preventScroll: true });
+  main.scrollIntoView({ block: 'start' });
+});
+
 if (menuButton && nav) {
   const mobileMenu = window.matchMedia('(max-width: 960px)');
   const setMenuOpen = (isOpen, returnFocus = false) => {
