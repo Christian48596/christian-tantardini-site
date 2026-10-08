@@ -877,3 +877,35 @@ main:focus { outline: none; }
 @media (max-width: 520px) {
   .home-science { display: none; }
 }
+
+/* A unified, name-led homepage instead of two disconnected columns. */
+.visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.home-stage { display: flex; flex-direction: column; justify-content: center; align-items: center; width: min(calc(100% - 64px), 1200px); gap: 2rem; padding-block: clamp(2.5rem, 6vh, 5rem); text-align: center; }
+.home-identity { align-self: center; width: 100%; }
+.home-identity h1 { font-size: clamp(4rem, 7.4vw, 7.2rem); line-height: 1; letter-spacing: -.055em; margin-bottom: 1.3rem; text-wrap: balance; }
+.home-identity h1 span { display: inline; }
+.home-identity .hero-affiliation { justify-items: center; margin-bottom: 1.4rem; gap: .15rem; }
+.home-identity .actions { width: min(100%, 330px); margin-inline: auto; justify-content: center; gap: .75rem; }
+.home-identity .button { min-width: 145px; }
+.home-about { align-self: center; width: min(100%, 1000px); }
+.home-fields { display: flex; flex-wrap: wrap; justify-content: center; border-bottom: 1px solid rgba(23,45,36,.16); padding: .65rem 0; }
+.home-fields li { padding: .35rem .9rem; border-bottom: 0; font-size: clamp(.95rem, 1.05vw, 1.06rem); line-height: 1.5; white-space: nowrap; }
+.home-about .profile-links { justify-content: center; margin-top: .85rem; }
+@media (max-width: 760px) {
+  .home-stage { width: calc(100% - 28px); gap: 1.7rem; padding-block: 2.5rem; }
+  .home-identity h1 { font-size: clamp(3.2rem, 13.5vw, 4.5rem); line-height: .98; }
+  .home-identity h1 span { display: block; }
+  .home-identity .button { min-width: 0; flex: 1 1 130px; }
+  .home-fields li { padding-inline: .65rem; }
+}
+
+.home-nameplate { display: flex; justify-content: center; align-items: center; gap: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: 1.4rem; }
+.home-headshot { flex: 0 0 auto; width: 135px; height: auto; border-radius: var(--radius); }
+.home-nameplate h1 { margin: 0; text-align: left; font-size: clamp(3.8rem, 6vw, 6rem); line-height: .98; }
+.home-nameplate h1 span { display: block; }
+@media (max-width: 760px) {
+  .home-nameplate { flex-direction: column; gap: 1.2rem; }
+  .home-headshot { width: 105px; }
+  .home-nameplate h1 { text-align: center; font-size: clamp(3rem, 12.5vw, 4.2rem); }
+  .home-stage { padding-block: 2rem; }
+}
