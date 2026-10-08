@@ -43,8 +43,60 @@ const publicationSearch = document.querySelector('[data-publication-search]');
 const publicationCount = document.querySelector('[data-publication-count]');
 const publicationEmpty = document.querySelector('[data-publication-empty]');
 const publicationReset = document.querySelector('[data-publication-reset]');
+const publicationClear = document.querySelector('[data-publication-clear]');
+const publicationControls = document.querySelector('[data-publication-controls]');
 let activePublicationYear = 'all';
 const normalizeTitleSearch = (value) => value.toLocaleLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+const titleSearchVariants = (word) => {
+  const variants = [word];
+  // Keep highlighting consistent with singular/plural matching.
+  if (word.length > 4 && word.endsWith('y')) variants.push(`${word.slice(0, -1)}i`);
+  if (word.length > 5 && word.endsWith('ies')) variants.push(`${word.slice(0, -3)}y`);
+  return variants;
+};
+const highlightTitle = (link, title, queryWords) => {
+  if (!queryWords.length) {
+    link.textContent = title;
+    return;
+  }
+  const variants = queryWords.flatMap(titleSearchVariants);
+  const fragment = document.createDocumentFragment();
+  let cursor = 0;
+  for (const match of title.matchAll(/[\p{L}\p{N}\p{M}]+/gu)) {
+    fragment.append(document.createTextNode(title.slice(cursor, match.index)));
+    const word = match[0];
+    if (variants.some((variant) => normalizeTitleSearch(word).includes(variant))) {
+      const mark = document.createElement('mark');
+      mark.textContent = word;
+      fragment.append(mark);
+    } else {
+      fragment.append(document.createTextNode(word));
+    }
+    cursor = match.index + word.length;
+  }
+  fragment.append(document.createTextNode(title.slice(cursor)));
+  link.replaceChildren(fragment);
+};
+
+if (publicationControls) {
+  const header = document.querySelector('.site-header');
+  const sentinel = document.querySelector('[data-publication-sentinel]');
+  let stickyObserver;
+  const updateStickyOffset = () => {
+    const height = Math.ceil(header.getBoundingClientRect().height);
+    document.documentElement.style.setProperty('--site-header-height', `${height}px`);
+    stickyObserver?.disconnect();
+    stickyObserver = new IntersectionObserver(([entry]) => {
+      publicationControls.classList.toggle('is-stuck', entry.boundingClientRect.top < height);
+    }, { rootMargin: `-${height}px 0px 0px 0px`, threshold: 0 });
+    stickyObserver.observe(sentinel);
+  };
+  new ResizeObserver(updateStickyOffset).observe(header);
+  new ResizeObserver(() => {
+    document.documentElement.style.setProperty('--publication-controls-height', `${Math.ceil(publicationControls.getBoundingClientRect().height)}px`);
+  }).observe(publicationControls);
+  updateStickyOffset();
+}
 
 const copyText = async (text, button) => {
   if (button.getAttribute('aria-disabled') === 'true') return;
@@ -116,6 +168,7 @@ if (selectedPublicationGrid && Array.isArray(window.selectedPublications)) {
 
 if (publicationList && Array.isArray(window.publications)) {
   const years = [...new Set(window.publications.map(([year]) => String(year)))];
+  const yearHeadings = new Map();
   const filterOptions = [['all', 'All years'], ...years.map((year) => [year, year])];
 
   filterOptions.forEach(([value, label], index) => {
@@ -130,11 +183,23 @@ if (publicationList && Array.isArray(window.publications)) {
 
   window.publications.forEach((publication) => {
     const [year, title, journal, doi, type] = publication;
+    if (!yearHeadings.has(String(year))) {
+      const yearHeading = document.createElement('h2');
+      yearHeading.className = 'publication-year-heading';
+      const yearTitle = document.createElement('span');
+      yearTitle.textContent = String(year);
+      const yearCount = document.createElement('span');
+      yearCount.className = 'publication-year-count';
+      yearHeading.append(yearTitle, yearCount);
+      yearHeadings.set(String(year), yearHeading);
+      publicationList.append(yearHeading);
+    }
     const authors = window.publicationAuthors?.[doi.toLowerCase()] ?? 'Author information unavailable';
     const article = document.createElement('article');
     article.className = `publication${type === 'correction' ? ' publication-correction' : ''}`;
     article.dataset.publicationYear = String(year);
     article.dataset.publicationTitle = normalizeTitleSearch(title);
+    article.dataset.publicationLabel = title;
 
     const yearLabel = document.createElement('span');
     yearLabel.className = 'publication-year';
@@ -183,27 +248,37 @@ if (publicationList && Array.isArray(window.publications)) {
   const publicationItems = publicationList.querySelectorAll('[data-publication-year]');
   const updatePublications = (saveUrl = true) => {
     const queryWords = normalizeTitleSearch(publicationSearch?.value ?? '').split(/\s+/).filter(Boolean);
+    const visibleByYear = new Map();
     let visibleCount = 0;
     publicationItems.forEach((item) => {
       const matchesYear = activePublicationYear === 'all' || item.dataset.publicationYear === activePublicationYear;
       const matchesQuery = queryWords.every((word) => {
-        const variants = [word];
-        // Common singular/plural forms, e.g. electronegativity/electronegativities.
-        if (word.length > 4 && word.endsWith('y')) variants.push(`${word.slice(0, -1)}i`);
-        if (word.length > 5 && word.endsWith('ies')) variants.push(`${word.slice(0, -3)}y`);
-        return variants.some((variant) => item.dataset.publicationTitle.includes(variant));
+        return titleSearchVariants(word).some((variant) => item.dataset.publicationTitle.includes(variant));
       });
       const isVisible = matchesYear && matchesQuery;
       item.hidden = !isVisible;
-      if (isVisible) visibleCount += 1;
+      if (isVisible) {
+        visibleCount += 1;
+        const year = item.dataset.publicationYear;
+        visibleByYear.set(year, (visibleByYear.get(year) ?? 0) + 1);
+        highlightTitle(item.querySelector('.publication-title-link'), item.dataset.publicationLabel, queryWords);
+      }
+    });
+    yearHeadings.forEach((heading, year) => {
+      const count = visibleByYear.get(year) ?? 0;
+      heading.hidden = activePublicationYear !== 'all' || count === 0;
+      heading.querySelector('.publication-year-count').textContent = `${count} ${count === 1 ? 'publication' : 'publications'}`;
     });
     if (publicationCount) publicationCount.textContent = String(visibleCount);
+    const resultLabel = publicationControls?.querySelector('[data-publication-result-label]');
+    if (resultLabel) resultLabel.textContent = visibleCount === 1 ? 'result' : 'results';
     publicationFilterBar?.querySelectorAll('[data-publication-filter]').forEach((button) => {
       const isActive = button.dataset.publicationFilter === activePublicationYear;
       button.classList.toggle('is-active', isActive);
       button.setAttribute('aria-pressed', String(isActive));
     });
     if (publicationReset) publicationReset.hidden = !publicationSearch.value.trim() && activePublicationYear === 'all';
+    if (publicationClear) publicationClear.hidden = !publicationSearch.value;
     if (saveUrl) {
       const url = new URL(window.location.href);
       if (publicationSearch.value.trim()) url.searchParams.set('q', publicationSearch.value.trim());
@@ -220,20 +295,32 @@ if (publicationList && Array.isArray(window.publications)) {
     }
   };
 
+  const updateFromControl = () => {
+    const wasStuck = publicationControls?.classList.contains('is-stuck');
+    updatePublications();
+    // Return to the first matching record without losing keyboard focus.
+    if (wasStuck) publicationList.scrollIntoView({ block: 'start', behavior: 'instant' });
+  };
+
   publicationFilterBar?.querySelectorAll('[data-publication-filter]').forEach((button) => {
     button.addEventListener('click', () => {
       activePublicationYear = button.dataset.publicationFilter;
-      updatePublications();
+      updateFromControl();
     });
   });
   publicationSearch?.addEventListener('input', () => {
-    updatePublications();
+    updateFromControl();
+  });
+  publicationClear?.addEventListener('click', () => {
+    publicationSearch.value = '';
+    updateFromControl();
+    publicationSearch.focus({ preventScroll: true });
   });
   publicationReset?.addEventListener('click', () => {
     publicationSearch.value = '';
     activePublicationYear = 'all';
-    updatePublications();
-    publicationSearch.focus();
+    updateFromControl();
+    publicationSearch.focus({ preventScroll: true });
   });
   const restoreFilters = () => {
     const parameters = new URLSearchParams(window.location.search);
@@ -241,6 +328,11 @@ if (publicationList && Array.isArray(window.publications)) {
     const year = parameters.get('year');
     activePublicationYear = years.includes(year) ? year : 'all';
     updatePublications(false);
+    const activeButton = publicationFilterBar?.querySelector('.is-active');
+    if (activeButton) {
+      const offset = activeButton.getBoundingClientRect().left - publicationFilterBar.getBoundingClientRect().left;
+      publicationFilterBar.scrollLeft += offset - 4;
+    }
   };
   window.addEventListener('popstate', restoreFilters);
   restoreFilters();
