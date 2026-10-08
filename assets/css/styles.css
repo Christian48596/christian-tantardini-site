@@ -909,3 +909,49 @@ main:focus { outline: none; }
   .home-nameplate h1 { text-align: center; font-size: clamp(3rem, 12.5vw, 4.2rem); }
   .home-stage { padding-block: 2rem; }
 }
+
+/* Portrait framing and a structured scientific field strip. */
+.home-photo-frame { position: relative; isolation: isolate; flex: 0 0 auto; padding: 6px; border: 1px solid #bac6ac; border-radius: var(--radius); background: var(--paper); }
+.home-stage { padding-block: clamp(1.5rem, 4vh, 3rem); }
+.home-photo-frame::before { content: ""; position: absolute; z-index: -1; inset: 8px -8px -8px 8px; border-radius: var(--radius); background: #dce4cf; }
+.home-headshot { border-radius: 2px; }
+.home-nameplate { gap: clamp(1.8rem, 3vw, 2.8rem); }
+.home-fields { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); padding: .9rem 0; }
+.home-fields li { display: flex; align-items: center; justify-content: center; gap: .65rem; padding: .5rem .7rem; white-space: normal; text-align: left; }
+.home-fields li + li { border-left: 1px solid rgba(23,45,36,.12); }
+.home-field-symbol { flex: 0 0 auto; width: 30px; height: 30px; }
+.home-fields li span { max-width: 140px; line-height: 1.35; }
+
+/* The bibliography uses one centered grid from heading to the final record. */
+.publication-record > .container { max-width: 1180px; }
+.publication-record .publication-tools,
+.publication-record .publication-filter-tools,
+.publication-record .publication-list,
+.publication-record .publication-empty { max-width: none; }
+.publication { grid-template-columns: 54px minmax(0,1fr) 100px; gap: 0 1.25rem; }
+.publication-details, .publication-footer { display: contents; }
+.publication-year { grid-column: 1; grid-row: 1 / span 3; }
+.publication h3 { grid-column: 2; grid-row: 1; }
+.publication-meta { grid-column: 2; grid-row: 2; }
+.publication-authors { grid-column: 2; grid-row: 3; }
+.publication .publication-actions { grid-column: 3; grid-row: 1 / span 3; flex-direction: column; align-items: flex-end; gap: 0; min-width: 0; }
+.publication .publication-actions .publication-link,
+.publication .publication-actions .publication-action { min-height: 44px; }
+.publication .publication-actions .publication-link { display: inline-flex; align-items: center; }
+.publication-search input { width: min(100%, 42rem); }
+@media (max-width: 900px) {
+  .home-fields { grid-template-columns: repeat(3, minmax(0,1fr)); row-gap: .5rem; }
+  .home-fields li + li { border-left: 0; }
+}
+@media (max-width: 680px) {
+  .home-fields { grid-template-columns: repeat(2, minmax(0,1fr)); padding: .55rem 0; row-gap: .25rem; }
+  .home-fields li { justify-content: flex-start; padding: .5rem; font-size: .92rem; }
+  .home-fields li:last-child { grid-column: 1 / -1; justify-content: center; }
+  .home-field-symbol { width: 26px; height: 26px; }
+  .publication { grid-template-columns: 38px minmax(0,1fr); gap: 0 .7rem; }
+  .publication-year { grid-row: 1; }
+  .publication-details { display: block; grid-column: 2; grid-row: 1; }
+  .publication-footer { display: flex; margin-top: 0; }
+  .publication .publication-actions { flex-direction: row; justify-content: flex-start; align-items: center; gap: 1.1rem; }
+  .publication-search input { width: 100%; }
+}

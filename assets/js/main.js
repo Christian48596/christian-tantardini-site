@@ -141,6 +141,7 @@ if (publicationList && Array.isArray(window.publications)) {
     yearLabel.textContent = String(year);
 
     const details = document.createElement('div');
+    details.className = 'publication-details';
     const heading = document.createElement('h3');
     const titleLink = document.createElement('a');
     titleLink.className = 'publication-title-link';
