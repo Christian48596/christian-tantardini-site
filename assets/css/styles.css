@@ -7,6 +7,7 @@
   --mint: #d4ddc5;
   --mint-bright: #f0f1e6;
   --olive-accent: #9da780;
+  --olive-ink: #586334;
   --text: #edf4ed;
   --muted: #a8bbae;
   --line: rgba(220, 235, 221, .24);
@@ -181,7 +182,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   text-transform: uppercase;
   transition: transform .2s ease, background .2s ease;
 }
-.button:hover { transform: translateY(-2px); background: var(--mint-bright); }
+.button:hover { background: var(--mint-bright); }
 .button-secondary { color: var(--text); background: transparent; border-color: var(--line); }
 .button-secondary:hover { color: var(--ink); background: var(--paper); }
 .hero-visual { min-height: 590px; display: grid; place-items: center; }
@@ -852,4 +853,27 @@ main:focus { outline: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .button:hover { transform: none; }
+}
+
+/* One deliberate scientific accent, rather than a pattern behind the text. */
+.home-main::before { content: none; }
+.home-stage { width: min(calc(100% - 40px), 1200px); grid-template-columns: minmax(0,1.15fr) minmax(0,1fr); gap: clamp(2.5rem, 5vw, 4rem); }
+.home-science { width: min(100%, 340px); margin-top: 1rem; }
+.home-science img { width: 100%; height: auto; }
+.research-number { color: var(--olive-ink); }
+.text-link:hover, .research-index-link:hover, .research-paper a:hover,
+.publication-title-link:hover, .contact-row a:hover { color: var(--olive-ink); }
+.text-link { transition: color .18s ease, border-color .18s ease; }
+.text-link:hover { border-color: var(--olive-ink); }
+.button:active { transform: none; }
+.home-page .button:active, body:not(.home-page) .button:active { background: #203529; }
+.home-page .button-secondary:active, body:not(.home-page) .button-secondary:active { color: var(--ink); background: #dce6d4; }
+.filter-button:active, .menu-toggle:active { filter: brightness(.94); }
+.publication-action:active, .text-link:active, .research-paper a:active, .contact-row a:active { color: #21372a; }
+@media (max-width: 760px) {
+  .home-stage { width: calc(100% - 28px); grid-template-columns: minmax(0,1fr); gap: 2.5rem; }
+  .home-science { width: 230px; }
+}
+@media (max-width: 520px) {
+  .home-science { display: none; }
 }
