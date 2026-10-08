@@ -35,6 +35,14 @@ const os = require('node:os');
           });
           assert.equal(aligned, true, `Research text/arrow alignment at ${width}px`);
         }
+        if (file === 'activities.html') {
+          const artwork = await page.evaluate(() => {
+            const images = [...document.querySelectorAll('.activity-illustration')];
+            const headings = [...document.querySelectorAll('.activity-content h2')].map((el) => el.getBoundingClientRect().left);
+            return images.length === 4 && images.every((el) => el.complete && el.naturalWidth > 0 && el.getBoundingClientRect().width >= 56) && headings.every((x) => Math.abs(x - headings[0]) < 1);
+          });
+          assert.equal(artwork, true, `Activity drawings and text alignment at ${width}px`);
+        }
       }
       await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `Home overflows at ${width}px`);
@@ -123,6 +131,10 @@ const os = require('node:os');
     await page.screenshot({ path: path.join(os.tmpdir(), 'christian-publications15.png') });
     await page.goto(`${base}/projects.html`, { waitUntil: 'networkidle' });
     await page.screenshot({ path: path.join(os.tmpdir(), 'christian-research15.png') });
+    await page.goto(`${base}/activities.html`, { waitUntil: 'networkidle' });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-activities16.png'), fullPage: true });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-activities16-mobile.png'), fullPage: true });
     console.log('All UI checks passed; desktop screenshots saved in OS temp directory.');
   } finally {
     await browser.close();

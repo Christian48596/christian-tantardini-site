@@ -1040,3 +1040,19 @@ body:not(.home-page) main .container { width: min(calc(100% - 40px), 1180px); ma
   .research-symbol { align-self: start; }
   .research-row h2 { padding-top: .2rem; }
 }
+
+/* Activity drawings share the research index's quiet line-art treatment. */
+.activity-entry { grid-template-columns: 180px 84px minmax(0,1fr); gap: 1.5rem; align-items: start; }
+.activity-illustration { display: block; width: 84px; height: 84px; padding: 9px; border-radius: var(--radius); background: #e4eddf; }
+.activity-content { min-width: 0; }
+.activity-content p { max-width: 70ch; }
+@media (max-width: 900px) {
+  .activity-entry { grid-template-columns: 140px 72px minmax(0,1fr); gap: 1.1rem; }
+  .activity-illustration { width: 72px; height: 72px; padding: 8px; }
+}
+@media (max-width: 680px) {
+  .activity-entry { grid-template-columns: 56px minmax(0,1fr); gap: .5rem 1rem; }
+  .activity-illustration { grid-column: 1; grid-row: 1 / span 2; width: 56px; height: 56px; padding: 6px; }
+  .activity-date { grid-column: 2; grid-row: 1; padding-top: 0; font-size: .8rem; }
+  .activity-content { grid-column: 2; grid-row: 2; }
+}
