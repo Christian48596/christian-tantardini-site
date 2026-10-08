@@ -414,15 +414,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   content: "";
   position: absolute;
   z-index: 0;
-  top: clamp(.5rem, 3vh, 2.5rem);
-  left: 50%;
-  width: min(90vw, 1600px);
-  aspect-ratio: 1200 / 520;
-  transform: translateX(-50%);
-  background: url("../images/bond-density-backdrop.svg?v=5") center / contain no-repeat;
-  opacity: .065;
-  -webkit-mask-image: linear-gradient(to bottom, #000 8%, #000 38%, transparent 82%);
-  mask-image: linear-gradient(to bottom, #000 8%, #000 38%, transparent 82%);
+  inset: 0;
+  background: url("../images/research-wallpaper.png") center / cover no-repeat;
+  opacity: .16;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
   pointer-events: none;
 }
 .home-page .footer-inner { width: min(calc(100% - 40px), 1740px); }
@@ -546,7 +542,7 @@ body:not(.home-page) .site-footer { color: #56624b; }
 }
 
 @media (max-width: 960px) {
-  .home-main::before { display: none; }
+  .home-main::before { background-size: 100% auto; background-position: center top; opacity: .12; }
   body:not(.home-page) .site-nav { background: var(--header-bg); border-color: rgba(220,235,221,.2); }
   .home-stage { grid-template-columns: 1fr; }
   .home-about, .home-portrait { grid-column: 1; grid-row: auto; }
@@ -855,8 +851,7 @@ main:focus { outline: none; }
   .button:hover { transform: none; }
 }
 
-/* One deliberate scientific accent, rather than a pattern behind the text. */
-.home-main::before { content: none; }
+/* Quiet scientific details and consistent interactive accents. */
 .home-stage { width: min(calc(100% - 40px), 1200px); grid-template-columns: minmax(0,1.15fr) minmax(0,1fr); gap: clamp(2.5rem, 5vw, 4rem); }
 .home-science { width: min(100%, 340px); margin-top: 1rem; }
 .home-science img { width: 100%; height: auto; }
