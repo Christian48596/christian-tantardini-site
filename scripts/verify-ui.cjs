@@ -46,8 +46,39 @@ const os = require('node:os');
       }
       await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `Home overflows at ${width}px`);
+      const cards = await page.evaluate(() => [...document.querySelectorAll('.home-field-card')].map((card) => {
+        const image = card.querySelector('img');
+        const box = card.getBoundingClientRect();
+        return { loaded: image.complete && image.naturalWidth === 768, width: box.width, height: box.height, href: card.getAttribute('href') };
+      }));
+      assert.equal(cards.length, 5);
+      assert.ok(cards.every((card) => card.loaded && card.width >= 44 && card.height >= 44), `Card images and touch targets at ${width}px`);
+      assert.equal(new Set(cards.map((card) => card.href)).size, 5);
       console.log(`Grid, first dividers and no-overflow: ${width}px passed`);
     }
+
+    await page.setViewportSize({ width: 1280, height: 900 });
+    for (const slug of ['physical-chemistry', 'solid-state-physics', 'fluid-dynamics', 'machine-learning', 'ai']) {
+      await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+      await page.locator(`.home-field-card[href="projects.html#${slug}"]`).click();
+      await page.waitForURL(`**/projects.html#${slug}`);
+      await page.waitForLoadState('networkidle');
+      const target = await page.evaluate((id) => {
+        const row = document.getElementById(id);
+        return row.matches(':target') && row.getBoundingClientRect().top >= document.querySelector('.site-header').getBoundingClientRect().bottom - 1;
+      }, slug);
+      assert.equal(target, true, `Card opens an unobscured Research target: ${slug}`);
+    }
+    await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+    await page.locator('.home-field-card').first().focus();
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Shift+Tab');
+    assert.equal(await page.locator('.home-field-card').first().evaluate((el) => el.matches(':focus-visible') && getComputedStyle(el).outlineStyle !== 'none'), true);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.locator('.home-field-card').first().hover();
+    assert.equal(await page.locator('.home-field-card').first().evaluate((el) => getComputedStyle(el).transform), 'none');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    console.log('Research cards: images, keyboard focus, all five links and reduced motion passed');
 
     for (const width of [390, 1280]) {
       await page.setViewportSize({ width, height: 844 });
@@ -135,6 +166,10 @@ const os = require('node:os');
     await page.screenshot({ path: path.join(os.tmpdir(), 'christian-activities16.png'), fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.screenshot({ path: path.join(os.tmpdir(), 'christian-activities16-mobile.png'), fullPage: true });
+    await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-home17-mobile.png'), fullPage: true });
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-home17.png'), fullPage: true });
     console.log('All UI checks passed; desktop screenshots saved in OS temp directory.');
   } finally {
     await browser.close();
