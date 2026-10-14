@@ -23,6 +23,33 @@ const os = require('node:os');
           return { x: rect.x, bottom: rect.bottom, overflow: document.documentElement.scrollWidth > innerWidth };
         });
         assert.equal(layout.overflow, false, `${file} overflows at ${width}px`);
+        assert.equal(await page.evaluate(() => getComputedStyle(document.body).backgroundColor), 'rgb(241, 246, 243)', `${file}: pale mint background`);
+        if (file === 'cv.html') {
+          const cv = await page.evaluate(() => {
+            const panels = [...document.querySelectorAll('.cv-block')];
+            const dates = [...document.querySelectorAll('.cv-block--timeline time')];
+            const links = [...document.querySelectorAll('.cv-block--profiles .text-link')];
+            return {
+              panels: panels.length,
+              translucentPanels: panels.every((el) => getComputedStyle(el).backgroundColor === 'rgba(224, 238, 229, 0.42)'),
+              dates: dates.map((el) => el.textContent),
+              labels: [...document.querySelectorAll('.cv-skill')].map((el) => el.textContent),
+              links: links.every((el) => el.getBoundingClientRect().height >= 44),
+              metric: document.querySelector('.cv-metric-value').textContent,
+              timelineAligned: panels.slice(0,2).every((panel) => {
+                const entries = [...panel.querySelectorAll('.cv-entry-body')].map((el) => el.getBoundingClientRect().left);
+                return entries.every((x) => Math.abs(x - entries[0]) < 1);
+              })
+            };
+          });
+          assert.equal(cv.panels, 4);
+          assert.equal(cv.translucentPanels, true);
+          assert.deepEqual(cv.dates, ['Current','2025','2022—2025','2020—2022','2020','2014','2012']);
+          assert.deepEqual(cv.labels, ['Fortran','C++','Python','MPI','OpenMP','GPU']);
+          assert.equal(cv.metric, '18');
+          assert.equal(cv.links, true, `CV profile touch targets at ${width}px`);
+          assert.equal(cv.timelineAligned, true, `CV timeline alignment at ${width}px`);
+        }
         if (file === 'publications.html') {
           const fullWidthSearch = await page.evaluate(() => {
             const panel = document.querySelector('.publication-controls').getBoundingClientRect();
@@ -55,6 +82,7 @@ const os = require('node:os');
       }
       await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `Home overflows at ${width}px`);
+      assert.equal(await page.evaluate(() => getComputedStyle(document.body).backgroundColor), 'rgb(241, 246, 243)', 'Home: pale mint background');
       const cards = await page.evaluate(() => [...document.querySelectorAll('.home-field-card')].map((card) => {
         const image = card.querySelector('img');
         const box = card.getBoundingClientRect();
@@ -203,6 +231,12 @@ const os = require('node:os');
     await page.screenshot({ path: path.join(os.tmpdir(), 'christian-research18-mobile.png'), fullPage: true });
     await page.goto(`${base}/activities.html`, { waitUntil: 'networkidle' });
     await page.screenshot({ path: path.join(os.tmpdir(), 'christian-activities18-mobile.png'), fullPage: true });
+    await page.goto(`${base}/cv.html`, { waitUntil: 'networkidle' });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-cv19-mobile.png'), fullPage: true });
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-cv19.png'), fullPage: true });
+    await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-home19.png'), fullPage: true });
     console.log('All UI checks passed; desktop screenshots saved in OS temp directory.');
   } finally {
     await browser.close();
