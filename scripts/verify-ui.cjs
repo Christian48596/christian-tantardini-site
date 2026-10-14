@@ -23,6 +23,14 @@ const os = require('node:os');
           return { x: rect.x, bottom: rect.bottom, overflow: document.documentElement.scrollWidth > innerWidth };
         });
         assert.equal(layout.overflow, false, `${file} overflows at ${width}px`);
+        if (file === 'publications.html') {
+          const fullWidthSearch = await page.evaluate(() => {
+            const panel = document.querySelector('.publication-controls').getBoundingClientRect();
+            const input = document.querySelector('[data-publication-search]').getBoundingClientRect();
+            return Math.abs(panel.left - input.left) < 1 && Math.abs(panel.right - input.right) < 1;
+          });
+          assert.equal(fullWidthSearch, true, `Full-width publication search at ${width}px`);
+        }
         if (reference) {
           assert.ok(Math.abs(layout.x - reference.x) < 1, `${file}: heading x differs at ${width}px`);
           assert.ok(Math.abs(layout.bottom - reference.bottom) < 1, `${file}: divider y differs at ${width}px`);
@@ -31,7 +39,8 @@ const os = require('node:os');
           const aligned = await page.evaluate(() => {
             const labels = [...document.querySelectorAll('.research-paper > span')].map((el) => el.getBoundingClientRect().left);
             const tails = [...document.querySelectorAll('.link-tail')].map((el) => [...el.getClientRects()].every((rect) => Math.abs(rect.top - el.getClientRects()[0].top) < 1));
-            return labels.every((x) => Math.abs(x - labels[0]) < 1) && tails.every(Boolean);
+            const images = [...document.querySelectorAll('.research-illustration')];
+            return labels.every((x) => Math.abs(x - labels[0]) < 1) && tails.every(Boolean) && images.length === 5 && images.every((el) => el.complete && el.naturalWidth === 768 && el.src.includes('-gloss.webp'));
           });
           assert.equal(aligned, true, `Research text/arrow alignment at ${width}px`);
         }
@@ -39,7 +48,7 @@ const os = require('node:os');
           const artwork = await page.evaluate(() => {
             const images = [...document.querySelectorAll('.activity-illustration')];
             const headings = [...document.querySelectorAll('.activity-content h2')].map((el) => el.getBoundingClientRect().left);
-            return images.length === 4 && images.every((el) => el.complete && el.naturalWidth > 0 && el.getBoundingClientRect().width >= 56) && headings.every((x) => Math.abs(x - headings[0]) < 1);
+            return images.length === 4 && images.every((el) => el.complete && el.naturalWidth === 768 && el.src.includes('-gloss.webp') && el.getBoundingClientRect().width >= 56) && headings.every((x) => Math.abs(x - headings[0]) < 1);
           });
           assert.equal(artwork, true, `Activity drawings and text alignment at ${width}px`);
         }
@@ -49,11 +58,23 @@ const os = require('node:os');
       const cards = await page.evaluate(() => [...document.querySelectorAll('.home-field-card')].map((card) => {
         const image = card.querySelector('img');
         const box = card.getBoundingClientRect();
-        return { loaded: image.complete && image.naturalWidth === 768, width: box.width, height: box.height, href: card.getAttribute('href') };
+        return { loaded: image.complete && image.naturalWidth === 768 && image.src.includes('-gloss.webp'), width: box.width, height: box.height, href: card.getAttribute('href') };
       }));
       assert.equal(cards.length, 5);
       assert.ok(cards.every((card) => card.loaded && card.width >= 44 && card.height >= 44), `Card images and touch targets at ${width}px`);
       assert.equal(new Set(cards.map((card) => card.href)).size, 5);
+      assert.equal(await page.locator('.home-introduction .home-profile-links .text-link').count(), 3);
+      const centeredIntro = await page.evaluate(() => {
+        const heading = document.querySelector('.home-identity h1');
+        const range = document.createRange();
+        range.selectNodeContents(heading);
+        const name = range.getBoundingClientRect();
+        const photo = document.querySelector('.home-photo-frame').getBoundingClientRect();
+        const stage = document.querySelector('.home-stage').getBoundingClientRect();
+        const center = stage.left + stage.width / 2;
+        return getComputedStyle(heading).textAlign === 'center' && Math.abs(name.left + name.width / 2 - center) < 1 && Math.abs(photo.left + photo.width / 2 - center) < 1;
+      });
+      assert.equal(centeredIntro, true, `Portrait and name centered at ${width}px`);
       console.log(`Grid, first dividers and no-overflow: ${width}px passed`);
     }
 
@@ -170,6 +191,18 @@ const os = require('node:os');
     await page.screenshot({ path: path.join(os.tmpdir(), 'christian-home17-mobile.png'), fullPage: true });
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.screenshot({ path: path.join(os.tmpdir(), 'christian-home17.png'), fullPage: true });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-home18.png'), fullPage: true });
+    await page.goto(`${base}/projects.html`, { waitUntil: 'networkidle' });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-research18.png'), fullPage: true });
+    await page.goto(`${base}/activities.html`, { waitUntil: 'networkidle' });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-activities18.png'), fullPage: true });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-home18-mobile.png'), fullPage: true });
+    await page.goto(`${base}/projects.html`, { waitUntil: 'networkidle' });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-research18-mobile.png'), fullPage: true });
+    await page.goto(`${base}/activities.html`, { waitUntil: 'networkidle' });
+    await page.screenshot({ path: path.join(os.tmpdir(), 'christian-activities18-mobile.png'), fullPage: true });
     console.log('All UI checks passed; desktop screenshots saved in OS temp directory.');
   } finally {
     await browser.close();
